@@ -1,12 +1,15 @@
 import { mkdir, readFile, readdir, rm, writeFile, cp } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 import * as esbuild from 'esbuild';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const assetsDir = path.join(distDir, 'assets');
+const ssrDir = path.join(rootDir, '.ssr');
 const RESPONSIVE_GLOBAL_CSS = `
 <style>
   body { overflow-x: hidden; }
@@ -22,7 +25,7 @@ const RESPONSIVE_GLOBAL_CSS = `
   }
 </style>`;
 
-const BALANCED_TYPESCALE_SCRIPT = `
+const STRICT_TYPESCALE_SCRIPT = `
 <script>
 (() => {
   const MIN_FONT_SIZE = 16;
@@ -47,30 +50,23 @@ const BALANCED_TYPESCALE_SCRIPT = `
     });
   };
 
+  const run = () => window.requestAnimationFrame(applyReadableTypeFloor);
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyReadableTypeFloor, { once: true });
+    document.addEventListener('DOMContentLoaded', run, { once: true });
   } else {
-    applyReadableTypeFloor();
+    run();
   }
 
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(applyReadableTypeFloor);
-  }
-
-  const observer = new MutationObserver(() => applyReadableTypeFloor());
-  const startObserver = () => {
-    if (document.body) {
-      observer.observe(document.body, { childList: true, subtree: true });
-    }
-  };
-
-  startObserver();
-  window.addEventListener('resize', applyReadableTypeFloor);
+  window.addEventListener('load', run, { once: true });
 })();
 </script>`;
 
 const BABEL_SRC_RE = /<script\s+type="text\/babel"\s+src="([^"]+)"><\/script>/g;
 const INLINE_BABEL_RE = /<script\s+type="text\/babel">([\s\S]*?)<\/script>/;
+const ROOT_RE = /<div id="root"><\/div>/;
+const GOOGLE_FONT_HREF_RE = /(https:\/\/fonts\.googleapis\.com\/css2\?[^"']+)/g;
+const MOUNT_RE = /ReactDOM\.createRoot\(document\.getElementById\((['"])root\1\)\)\.render\(<([A-Za-z0-9_$.]+)\s*\/>\);?/;
 const REMOVE_RE = [
   /<script[^>]+src="https:\/\/unpkg\.com\/react@[^"]+"[^>]*><\/script>\s*/g,
   /<script[^>]+src="https:\/\/unpkg\.com\/react-dom@[^"]+"[^>]*><\/script>\s*/g,
@@ -79,6 +75,11 @@ const REMOVE_RE = [
   /<script\s+type="text\/babel"\s+src="[^"]+"><\/script>\s*/g,
   /<script\s+type="text\/babel">[\s\S]*?<\/script>\s*/g,
 ];
+const PRELOAD_COMPONENTS = new Set([
+  'components/HomeHero.jsx',
+  'components/BlogHero.jsx',
+  'components/QuoteHero.jsx',
+]);
 
 function slugify(fileName) {
   return fileName
@@ -92,6 +93,24 @@ function escapeTemplateContent(value) {
   return value.replace(/<\/script/gi, '<\\/script');
 }
 
+function addDisplaySwap(url) {
+  return url.includes('display=') ? url : `${url}${url.includes('?') ? '&' : '?'}display=swap`;
+}
+
+function transformMount(source, mode) {
+  const match = source.match(MOUNT_RE);
+  if (!match) {
+    return source;
+  }
+
+  const componentName = match[2];
+  if (mode === 'client') {
+    return source.replace(MOUNT_RE, `hydrateRoot(document.getElementById('root'), <${componentName} />);`);
+  }
+
+  return source.replace(MOUNT_RE, `export { ${componentName} as App };`);
+}
+
 async function getPageFiles() {
   const entries = await readdir(rootDir, { withFileTypes: true });
   return entries
@@ -100,7 +119,7 @@ async function getPageFiles() {
     .sort();
 }
 
-async function buildBundle(pageFile, htmlSource) {
+function extractPageScripts(pageFile, htmlSource) {
   const componentPaths = [...htmlSource.matchAll(BABEL_SRC_RE)].map((match) => match[1]);
   const inlineMatch = htmlSource.match(INLINE_BABEL_RE);
 
@@ -108,58 +127,110 @@ async function buildBundle(pageFile, htmlSource) {
     throw new Error(`Could not extract JSX scripts from ${pageFile}`);
   }
 
-  const bundledParts = [
-    `import React from "react";`,
-    `import { createRoot } from "react-dom/client";`,
-    `const ReactDOM = { createRoot };`,
-  ];
+  return {
+    componentPaths,
+    inlineScript: inlineMatch ? inlineMatch[1].trim() : null,
+  };
+}
+
+async function assemblePageSource(pageFile, componentPaths, inlineScript, mode) {
+  const prelude = mode === 'client'
+    ? [
+        'import React from "react";',
+        'import { hydrateRoot } from "react-dom/client";',
+      ]
+    : [
+        'import React from "react";',
+        'import { renderToString } from "react-dom/server";',
+        `globalThis.window = { innerWidth: 1440, location: { pathname: ${JSON.stringify(`/${pageFile}`)} } };`,
+        'globalThis.self = window;',
+        'globalThis.navigator = { userAgent: "node" };',
+      ];
+
+  const parts = [...prelude];
 
   for (const componentPath of componentPaths) {
     const absolutePath = path.join(rootDir, componentPath);
-    bundledParts.push(await readFile(absolutePath, 'utf8'));
+    const source = await readFile(absolutePath, 'utf8');
+    parts.push(transformMount(source, mode));
   }
 
-  if (inlineMatch) {
-    bundledParts.push(inlineMatch[1].trim());
+  if (inlineScript) {
+    parts.push(transformMount(inlineScript, mode));
   }
 
+  if (mode === 'ssr') {
+    parts.push('export const rootHtml = renderToString(React.createElement(App));');
+  }
+
+  return parts.join('\n\n');
+}
+
+async function buildBundle(pageFile, source, mode) {
   const result = await esbuild.build({
     stdin: {
-      contents: bundledParts.join('\n\n'),
+      contents: source,
       resolveDir: rootDir,
-      sourcefile: pageFile.replace(/\.html$/i, '.entry.jsx'),
+      sourcefile: pageFile.replace(/\.html$/i, mode === 'client' ? '.client.jsx' : '.ssr.jsx'),
       loader: 'jsx',
     },
     bundle: true,
-    format: 'esm',
-    minify: true,
+    format: mode === 'client' ? 'esm' : 'cjs',
+    minify: mode === 'client',
+    platform: mode === 'client' ? 'browser' : 'node',
     write: false,
     jsx: 'transform',
     jsxFactory: 'React.createElement',
     jsxFragment: 'React.Fragment',
-    target: ['es2020'],
+    target: mode === 'client' ? ['es2020'] : ['node18'],
   });
 
-  const bundleFileName = `${slugify(pageFile)}.js`;
-  await writeFile(path.join(assetsDir, bundleFileName), result.outputFiles[0].text, 'utf8');
+  return result.outputFiles[0].text;
+}
 
-  return `assets/${bundleFileName}`;
+function getPreloadLinks(componentPaths) {
+  if (!componentPaths.some((componentPath) => PRELOAD_COMPONENTS.has(componentPath))) {
+    return '';
+  }
+
+  return '  <link rel="preload" as="image" href="images/heroBackground-100.jpg" fetchpriority="high">\n';
 }
 
 async function buildPage(pageFile) {
   const sourcePath = path.join(rootDir, pageFile);
   const htmlSource = await readFile(sourcePath, 'utf8');
-  const bundlePath = await buildBundle(pageFile, htmlSource);
+  const { componentPaths, inlineScript } = extractPageScripts(pageFile, htmlSource);
+
+  const clientSource = await assemblePageSource(pageFile, componentPaths, inlineScript, 'client');
+  const ssrSource = await assemblePageSource(pageFile, componentPaths, inlineScript, 'ssr');
+  const clientBundle = await buildBundle(pageFile, clientSource, 'client');
+  const ssrBundle = await buildBundle(pageFile, ssrSource, 'ssr');
+
+  const bundleFileName = `${slugify(pageFile)}.js`;
+  const ssrFileName = `${slugify(pageFile)}.cjs`;
+  await writeFile(path.join(assetsDir, bundleFileName), clientBundle, 'utf8');
+  await writeFile(path.join(ssrDir, ssrFileName), ssrBundle, 'utf8');
+
+  const ssrModulePath = path.join(ssrDir, ssrFileName);
+  const resolvedSsrModulePath = require.resolve(ssrModulePath);
+  delete require.cache[resolvedSsrModulePath];
+  const { rootHtml } = require(resolvedSsrModulePath);
 
   let transformedHtml = htmlSource;
   for (const pattern of REMOVE_RE) {
     transformedHtml = transformedHtml.replace(pattern, '');
   }
 
-  transformedHtml = transformedHtml.replace('</head>', `${RESPONSIVE_GLOBAL_CSS}\n</head>`);
+  transformedHtml = transformedHtml.replace(GOOGLE_FONT_HREF_RE, addDisplaySwap);
+  transformedHtml = transformedHtml.replace('</head>', `${getPreloadLinks(componentPaths)}${RESPONSIVE_GLOBAL_CSS}\n</head>`);
 
-  const typeScaleScript = `${BALANCED_TYPESCALE_SCRIPT}\n`;
-  const bundleScript = `  <script type="module" src="${escapeTemplateContent(bundlePath)}"></script>\n`;
+  if (!ROOT_RE.test(transformedHtml)) {
+    throw new Error(`Could not find root container in ${pageFile}`);
+  }
+  transformedHtml = transformedHtml.replace(ROOT_RE, `<div id="root">${rootHtml}</div>`);
+
+  const typeScaleScript = `${STRICT_TYPESCALE_SCRIPT}\n`;
+  const bundleScript = `  <script type="module" src="${escapeTemplateContent(`assets/${bundleFileName}`)}"></script>\n`;
   transformedHtml = transformedHtml.replace('</body>', `${typeScaleScript}${bundleScript}</body>`);
 
   await writeFile(path.join(distDir, pageFile), transformedHtml, 'utf8');
@@ -171,14 +242,20 @@ async function buildPage(pageFile) {
 
 async function main() {
   await rm(distDir, { recursive: true, force: true });
+  await rm(ssrDir, { recursive: true, force: true });
   await mkdir(assetsDir, { recursive: true });
+  await mkdir(ssrDir, { recursive: true });
 
   const pageFiles = await getPageFiles();
-  await Promise.all(pageFiles.map((pageFile) => buildPage(pageFile)));
+  for (const pageFile of pageFiles) {
+    await buildPage(pageFile);
+  }
 
   for (const dirName of ['images', 'assets']) {
     await cp(path.join(rootDir, dirName), path.join(distDir, dirName), { recursive: true });
   }
+
+  await rm(ssrDir, { recursive: true, force: true });
 }
 
 main().catch((error) => {
