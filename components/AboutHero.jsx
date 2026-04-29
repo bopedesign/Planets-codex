@@ -7,6 +7,7 @@
 
 const AboutHero = () => {
   const viewport = useResponsive();
+  const useSplitLayout = viewport.width >= 1320;
   const stats = [
     { k: 'Founded',       v: '2005' },
     { k: 'Sites shipped', v: '100+' },
@@ -36,7 +37,7 @@ const AboutHero = () => {
       <div className="wrap" style={{ position: 'relative', zIndex: 2, paddingTop: viewport.isMobile ? 28 : 60 }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: viewport.isTablet ? '1fr' : '1.15fr 1fr',
+          gridTemplateColumns: useSplitLayout ? '1.15fr 1fr' : '1fr',
           gap: viewport.isMobile ? 28 : 80,
           alignItems: 'stretch',
           paddingBottom: viewport.isMobile ? 48 : 80,
@@ -96,12 +97,12 @@ const AboutHero = () => {
               centered below, hairline divider rules between cells. */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: viewport.isMobile ? '1fr' : '1fr 1fr',
-            gridTemplateRows: viewport.isMobile ? 'repeat(4, auto)' : '1fr 1fr',
+            gridTemplateColumns: viewport.isMobile || !useSplitLayout ? '1fr' : '1fr 1fr',
+            gridTemplateRows: viewport.isMobile || !useSplitLayout ? 'repeat(4, auto)' : '1fr 1fr',
             border: '1px solid var(--rule-dark)',
             position: 'relative',
             alignSelf: 'stretch',
-            minHeight: viewport.isMobile ? 'auto' : 460,
+            minHeight: viewport.isMobile || !useSplitLayout ? 'auto' : 460,
           }}>
             {stats.map((s, i) => {
               const col = i % 2;
@@ -109,8 +110,8 @@ const AboutHero = () => {
               return (
                 <div key={i} style={{
                   padding: viewport.isMobile ? '24px 22px' : '32px 32px 28px',
-                  borderRight: viewport.isMobile ? 'none' : col === 0 ? '1px solid var(--rule-dark)' : 'none',
-                  borderBottom: viewport.isMobile || row === 0 ? '1px solid var(--rule-dark)' : 'none',
+                  borderRight: viewport.isMobile || !useSplitLayout ? 'none' : col === 0 ? '1px solid var(--rule-dark)' : 'none',
+                  borderBottom: viewport.isMobile || !useSplitLayout || row === 0 ? '1px solid var(--rule-dark)' : 'none',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
