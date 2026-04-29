@@ -2,6 +2,7 @@
    3-up card grid with placeholder imagery, category eyebrow, title, date. */
 
 const HomeBlog = () => {
+  const viewport = useResponsive();
   const posts = [
     {
       category: 'UX',
@@ -30,13 +31,13 @@ const HomeBlog = () => {
   ];
 
   return (
-    <section style={{ background: 'var(--light)', padding: '120px 0' }}>
+    <section style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0' }}>
       <div className="wrap">
         {/* Header row */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1.3fr 1fr',
-          gap: 64,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1.3fr 1fr',
+          gap: viewport.isMobile ? 20 : 64,
           alignItems: 'end',
           marginBottom: 56,
         }}>
@@ -45,7 +46,7 @@ const HomeBlog = () => {
               Recent insights
             </div>
             <h2 style={{
-              fontSize: 56,
+              fontSize: pickResponsive(viewport, 56, 46, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.025em',
               fontWeight: 400,
@@ -56,7 +57,7 @@ const HomeBlog = () => {
               Notes from the <span style={{ fontStyle: 'italic', fontWeight: 300 }}>studio</span>.
             </h2>
           </div>
-          <div style={{ justifySelf: 'end' }}>
+          <div style={{ justifySelf: viewport.isTablet ? 'start' : 'end' }}>
             <a href="#" style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -76,8 +77,8 @@ const HomeBlog = () => {
         {/* Cards */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 24,
+          gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+          gap: viewport.isMobile ? 18 : 24,
         }}>
           {posts.map((p, i) => (
             <a href="#" key={i} style={{

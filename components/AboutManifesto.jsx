@@ -3,23 +3,24 @@
    and the body copy as a centered supporting block on the right. */
 
 const AboutManifesto = () => {
+  const viewport = useResponsive();
   return (
-    <section style={{ background: 'var(--light)', padding: '120px 0' }}>
+    <section style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0' }}>
       <div className="wrap">
         <div style={{
           background: 'var(--light-2)',
           border: '1px solid var(--rule-light)',
-          padding: '80px 88px',
+          padding: viewport.isMobile ? '28px 24px' : viewport.isTablet ? '56px 48px' : '80px 88px',
           display: 'grid',
-          gridTemplateColumns: '1.35fr 1fr',
-          gap: 80,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1.35fr 1fr',
+          gap: viewport.isMobile ? 24 : 80,
           alignItems: 'center',
           position: 'relative',
         }}>
           {/* Left: headline */}
           <div>
             <h2 style={{
-              fontSize: 72,
+              fontSize: pickResponsive(viewport, 72, 58, 40),
               lineHeight: 0.98,
               letterSpacing: '-0.03em',
               fontWeight: 400,

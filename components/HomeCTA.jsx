@@ -3,16 +3,17 @@
    number as the hero contact method and buttons as alternates. */
 
 const HomeCTA = () => {
+  const viewport = useResponsive();
   return (
-    <section style={{ background: 'var(--light)', padding: '120px 0' }}>
+    <section style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0' }}>
       <div className="wrap">
         <div style={{
           background: 'var(--light-2)',
           border: '1px solid var(--rule-light)',
-          padding: '80px 88px',
+          padding: viewport.isMobile ? '28px 24px' : viewport.isTablet ? '56px 48px' : '80px 88px',
           display: 'grid',
-          gridTemplateColumns: '1.35fr 1fr',
-          gap: 80,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1.35fr 1fr',
+          gap: viewport.isMobile ? 28 : 80,
           alignItems: 'center',
           position: 'relative',
         }}>
@@ -20,7 +21,7 @@ const HomeCTA = () => {
           {/* Left: conversational prompts + answer + phone */}
           <div>
             <div style={{
-              fontSize: 18,
+              fontSize: viewport.isMobile ? 16 : 18,
               lineHeight: 1.5,
               color: 'var(--muted-light)',
               marginBottom: 20,
@@ -34,7 +35,7 @@ const HomeCTA = () => {
             </div>
 
             <h2 style={{
-              fontSize: 72,
+              fontSize: pickResponsive(viewport, 72, 58, 40),
               lineHeight: 0.98,
               letterSpacing: '-0.03em',
               fontWeight: 400,
@@ -47,8 +48,8 @@ const HomeCTA = () => {
 
             <div style={{
               display: 'flex',
-              alignItems: 'baseline',
-              gap: 18,
+              alignItems: viewport.isMobile ? 'flex-start' : 'baseline',
+              gap: viewport.isMobile ? 10 : 18,
               paddingTop: 28,
               borderTop: '1px solid var(--rule-light)',
             }}>
@@ -62,7 +63,7 @@ const HomeCTA = () => {
                 Call
               </div>
               <a href="tel:5412142116" style={{
-                fontSize: 38,
+                fontSize: pickResponsive(viewport, 38, 34, 28),
                 fontWeight: 500,
                 letterSpacing: '-0.02em',
                 color: 'var(--dark)',
@@ -97,7 +98,7 @@ const HomeCTA = () => {
               <span>Schedule a call</span>
               <span className="arrow">→</span>
             </a>
-            <div style={{ display: 'flex', gap: 18, fontSize: 13, color: 'var(--muted-light)', marginTop: 12 }}>
+            <div style={{ display: 'flex', flexDirection: viewport.isMobile ? 'column' : 'row', gap: 18, fontSize: 13, color: 'var(--muted-light)', marginTop: 12 }}>
               <span>✉ hello@nineplanets.co</span>
               <span style={{ opacity: 0.4 }}>·</span>
               <span>Mon–Fri, 9–5 PT</span>

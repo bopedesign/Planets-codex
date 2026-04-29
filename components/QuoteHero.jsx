@@ -3,6 +3,7 @@
    editorial headline, intro, and the same 3-column CTA strip pattern. */
 
 const QuoteHero = () => {
+  const viewport = useResponsive();
   return (
     <section style={{
       background: 'var(--dark)',
@@ -42,8 +43,8 @@ const QuoteHero = () => {
 
       <div className="wrap" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{
-          paddingTop: 80,
-          paddingBottom: 80,
+          paddingTop: viewport.isMobile ? 36 : 80,
+          paddingBottom: viewport.isMobile ? 44 : 80,
           maxWidth: 980,
         }}>
           {/* Breadcrumb */}
@@ -58,7 +59,7 @@ const QuoteHero = () => {
           </div>
 
           <h1 style={{
-            fontSize: 96,
+            fontSize: pickResponsive(viewport, 96, 72, 48),
             lineHeight: 1.02,
             letterSpacing: '-0.028em',
             fontWeight: 400,
@@ -69,7 +70,7 @@ const QuoteHero = () => {
           </h1>
 
           <p style={{
-            fontSize: 18,
+            fontSize: viewport.isMobile ? 16 : 18,
             lineHeight: 1.6,
             color: 'rgba(247,245,243,0.78)',
             margin: '36px 0 0',
@@ -84,7 +85,7 @@ const QuoteHero = () => {
         {/* Bottom CTA strip — same as Portfolio/Blog/service pages */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(3, 1fr)',
           borderTop: '1px solid rgba(247,245,243,0.12)',
         }}>
           {[
@@ -96,10 +97,11 @@ const QuoteHero = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              padding: '30px 28px 30px',
-              paddingLeft: i === 0 ? 0 : 32,
-              paddingRight: i === 2 ? 0 : 32,
-              borderLeft: i === 0 ? 'none' : '1px solid rgba(247,245,243,0.12)',
+              padding: viewport.isMobile ? '20px 0' : '30px 28px 30px',
+              paddingLeft: viewport.isMobile ? 0 : i === 0 ? 0 : 32,
+              paddingRight: viewport.isMobile ? 0 : i === 2 ? 0 : 32,
+              borderLeft: viewport.isMobile || i === 0 ? 'none' : '1px solid rgba(247,245,243,0.12)',
+              borderTop: viewport.isMobile && i > 0 ? '1px solid rgba(247,245,243,0.12)' : 'none',
               color: 'var(--light)',
               transition: 'background .2s ease',
               cursor: 'pointer',

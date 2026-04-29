@@ -3,6 +3,7 @@
      Row 1: Title (left) + schematic bleeding to the right edge of the viewport
      Row 2: Three-column Q/A grid beneath, with a top rule */
 const HomeArchitecture = () => {
+  const viewport = useResponsive();
   const questions = [
     {
       q: 'Can your customers find what they are looking for?',
@@ -22,22 +23,22 @@ const HomeArchitecture = () => {
     <section style={{
       background: 'var(--light-2)',
       color: 'var(--dark)',
-      padding: '80px 0 96px',
+      padding: viewport.isMobile ? '64px 0 72px' : viewport.isTablet ? '72px 0 88px' : '80px 0 96px',
       position: 'relative',
     }}>
       <div className="wrap">
         {/* ROW 1 — title left, schematic right (aligned to content column) */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.3fr)',
-          gap: 48,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : 'minmax(0, 1fr) minmax(0, 1.3fr)',
+          gap: viewport.isMobile ? 28 : 48,
           alignItems: 'center',
           marginBottom: 48,
         }}>
           {/* Left: title */}
           <div>
             <h2 style={{
-              fontSize: 68,
+              fontSize: pickResponsive(viewport, 68, 56, 40),
               lineHeight: 1.04,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -61,7 +62,7 @@ const HomeArchitecture = () => {
           <div style={{
             position: 'relative',
             width: '100%',
-            minHeight: 420,
+            minHeight: viewport.isMobile ? 280 : viewport.isTablet ? 340 : 420,
             display: 'flex',
             alignItems: 'center',
           }}>
@@ -74,11 +75,11 @@ const HomeArchitecture = () => {
           borderTop: '1px solid var(--rule-light)',
           paddingTop: 32,
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 56,
+          gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+          gap: viewport.isMobile ? 28 : 56,
         }}>
           {questions.map((item, i) => {
-            const align = i === 0 ? 'flex-start' : i === 1 ? 'center' : 'flex-end';
+            const align = viewport.isTablet ? 'flex-start' : i === 0 ? 'flex-start' : i === 1 ? 'center' : 'flex-end';
             return (
               <div key={i} style={{
                 display: 'flex',
@@ -98,7 +99,7 @@ const HomeArchitecture = () => {
                     {String(i + 1).padStart(2, '0')}
                   </div>
                   <div style={{
-                    fontSize: 18,
+                    fontSize: viewport.isMobile ? 16 : 18,
                     fontWeight: 500,
                     lineHeight: 1.35,
                     letterSpacing: '-0.012em',

@@ -4,6 +4,7 @@
    hairline-bordered look used throughout the site. */
 
 const QuoteForm = () => {
+  const viewport = useResponsive();
   // Field styles, declared once so every input matches.
   const labelStyle = {
     display: 'block',
@@ -70,23 +71,23 @@ const QuoteForm = () => {
       background: 'var(--light)',
       color: 'var(--dark)',
     }}>
-      <div className="wrap" style={{ paddingTop: 96, paddingBottom: 120 }}>
+      <div className="wrap" style={{ paddingTop: viewport.isMobile ? 56 : 96, paddingBottom: viewport.isMobile ? 72 : 120 }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '0.85fr 1.4fr',
-          gap: 96,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '0.85fr 1.4fr',
+          gap: viewport.isMobile ? 40 : 96,
           alignItems: 'start',
         }}>
 
           {/* ================= LEFT: contact details ================= */}
-          <aside style={{ position: 'sticky', top: 32 }}>
+          <aside style={{ position: viewport.isTablet ? 'static' : 'sticky', top: 32 }}>
 
             <div className="eyebrow" style={{ marginBottom: 18 }}>
               In person, on the phone, or by mail
             </div>
 
             <h2 style={{
-              fontSize: 48,
+              fontSize: pickResponsive(viewport, 48, 42, 34),
               lineHeight: 1.04,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -225,7 +226,7 @@ const QuoteForm = () => {
             style={{
               background: 'var(--light-2)',
               border: '1px solid var(--rule-light)',
-              padding: '56px 56px 48px',
+              padding: viewport.isMobile ? '28px 22px 24px' : viewport.isTablet ? '40px 32px 32px' : '56px 56px 48px',
             }}
           >
             <div style={{
@@ -252,7 +253,7 @@ const QuoteForm = () => {
             {/* Name — first / last */}
             <div style={{ marginBottom: 28 }}>
               <label style={labelStyle}>Name{reqStar}</label>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: viewport.isMobile ? '1fr' : '1fr 1fr', gap: 14 }}>
                 <div>
                   <input type="text" required style={inputStyle} onFocus={focusOn} onBlur={focusOff} />
                   <span style={subLabel}>First</span>
@@ -265,7 +266,7 @@ const QuoteForm = () => {
             </div>
 
             {/* Email + Phone */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: viewport.isMobile ? '1fr' : '1fr 1fr', gap: viewport.isMobile ? 14 : 20, marginBottom: 28 }}>
               <div>
                 <label style={labelStyle}>Email Address{reqStar}</label>
                 <input type="email" placeholder="you@example.com" required style={inputStyle} onFocus={focusOn} onBlur={focusOff} />
@@ -301,8 +302,8 @@ const QuoteForm = () => {
               </legend>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '12px 24px',
+                gridTemplateColumns: viewport.isMobile ? '1fr' : '1fr 1fr',
+                gap: viewport.isMobile ? '12px' : '12px 24px',
               }}>
                 {services.map((s, i) => (
                   <label key={i} style={{
@@ -364,7 +365,8 @@ const QuoteForm = () => {
             {/* Submit row */}
             <div style={{
               display: 'flex',
-              alignItems: 'center',
+              flexDirection: viewport.isMobile ? 'column' : 'row',
+              alignItems: viewport.isMobile ? 'stretch' : 'center',
               justifyContent: 'space-between',
               gap: 24,
               paddingTop: 28,
@@ -374,7 +376,7 @@ const QuoteForm = () => {
                 fontSize: 12,
                 color: 'var(--muted-light)',
                 lineHeight: 1.55,
-                maxWidth: 320,
+                maxWidth: viewport.isMobile ? '100%' : 320,
               }}>
                 We never share your details. By submitting, you agree to our privacy policy.
               </div>

@@ -211,6 +211,7 @@ const StarField = () => {
 };
 
 const HomeHero = () => {
+  const viewport = useResponsive();
   const ctas = [
     { label: 'Get a Quote', sub: 'When you are ready to move', href: 'Get a Quote.html' },
     { label: 'Our Process', sub: 'How we make your vision work' },
@@ -220,7 +221,7 @@ const HomeHero = () => {
   return (
     <section style={{
       position: 'relative',
-      minHeight: '100vh',
+      minHeight: viewport.isMobile ? 'auto' : '100vh',
       background: 'var(--dark)',
       color: 'var(--light)',
       display: 'flex',
@@ -271,28 +272,38 @@ const HomeHero = () => {
       <div style={{
         flex: 1,
         display: 'flex',
-        alignItems: 'center',
+        alignItems: viewport.isMobile ? 'flex-start' : 'center',
         position: 'relative',
         zIndex: 3,
+        padding: viewport.isMobile ? '32px 0 48px' : viewport.isTablet ? '24px 0 56px' : 0,
       }}>
         <div className="wrap" style={{ width: '100%' }}>
           <h1 style={{
-            fontSize: 92,
-            lineHeight: 1.04,
+            fontSize: pickResponsive(viewport, 92, 72, 56),
+            lineHeight: viewport.isMobile ? 0.98 : 1.04,
             letterSpacing: '-0.028em',
             fontWeight: 400,
-            margin: '0 0 56px 0',
+            margin: '0 0 ' + (viewport.isMobile ? 36 : 56) + 'px 0',
             color: 'var(--light)',
           }}>
-            A better website starts<br />
-            with the{' '}
-            <span style={{ fontStyle: 'italic', fontWeight: 300 }}>right approach</span>.
+            {viewport.isMobile ? (
+              <>
+                A better website starts with the{' '}
+                <span style={{ fontStyle: 'italic', fontWeight: 300 }}>right approach</span>.
+              </>
+            ) : (
+              <>
+                A better website starts<br />
+                with the{' '}
+                <span style={{ fontStyle: 'italic', fontWeight: 300 }}>right approach</span>.
+              </>
+            )}
           </h1>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <div style={{ width: '100%', maxWidth: 460 }}>
+          <div style={{ display: 'flex', justifyContent: viewport.isTablet ? 'flex-start' : 'flex-end' }}>
+            <div style={{ width: '100%', maxWidth: viewport.isTablet ? '100%' : 460 }}>
               <p style={{
-                fontSize: 16,
+                fontSize: viewport.isMobile ? 15 : 16,
                 lineHeight: 1.65,
                 color: 'rgba(247,245,243,0.82)',
                 margin: '0 0 32px 0',
@@ -304,8 +315,8 @@ const HomeHero = () => {
 
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: 24,
+                gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(3, 1fr)',
+                gap: viewport.isMobile ? 16 : 24,
               }}>
                 {['Eugene, OR', 'Detroit, MI', '& Beyond'].map((loc) => (
                   <div key={loc}>
@@ -336,7 +347,7 @@ const HomeHero = () => {
         <div className="wrap" style={{ paddingTop: 0, paddingBottom: 0 }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
+            gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(3, 1fr)',
             borderTop: '1px solid rgba(247,245,243,0.12)',
           }}>
             {ctas.map((cta, i) => (
@@ -347,10 +358,11 @@ const HomeHero = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '30px 28px 30px',
-                  paddingLeft: i === 0 ? 0 : 32,
-                  paddingRight: i === 2 ? 0 : 32,
-                  borderLeft: i === 0 ? 'none' : '1px solid rgba(247,245,243,0.12)',
+                  padding: viewport.isMobile ? '20px 0' : '30px 28px 30px',
+                  paddingLeft: viewport.isMobile ? 0 : i === 0 ? 0 : 32,
+                  paddingRight: viewport.isMobile ? 0 : i === 2 ? 0 : 32,
+                  borderLeft: viewport.isMobile || i === 0 ? 'none' : '1px solid rgba(247,245,243,0.12)',
+                  borderTop: viewport.isMobile && i > 0 ? '1px solid rgba(247,245,243,0.12)' : 'none',
                   color: 'var(--light)',
                   transition: 'background .2s ease',
                 }}

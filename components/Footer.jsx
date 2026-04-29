@@ -1,18 +1,19 @@
 const Footer = () => {
+  const viewport = useResponsive();
   return (
-    <footer style={{ background: 'var(--dark)', color: 'var(--light)', padding: '80px 0 40px' }}>
+    <footer style={{ background: 'var(--dark)', color: 'var(--light)', padding: viewport.isMobile ? '64px 0 32px' : '80px 0 40px' }}>
       <div className="wrap">
         {/* Top: giant CTA */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1.6fr 1fr',
-          gap: 60,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1.6fr 1fr',
+          gap: viewport.isMobile ? 24 : 60,
           alignItems: 'end',
           paddingBottom: 60,
           borderBottom: '1px solid var(--rule-dark)',
         }}>
           <h2 style={{
-            fontSize: 64,
+            fontSize: pickResponsive(viewport, 64, 52, 38),
             lineHeight: 1.02,
             letterSpacing: '-0.028em',
             fontWeight: 400,
@@ -22,7 +23,7 @@ const Footer = () => {
             Ready to build a<br />
             website that <span style={{ fontStyle: 'italic', fontWeight: 300 }}>works</span>?
           </h2>
-          <div style={{ display: 'flex', gap: 12, paddingBottom: 12, justifyContent: 'flex-end' }}>
+          <div style={{ display: 'flex', flexDirection: viewport.isMobile ? 'column' : 'row', gap: 12, paddingBottom: 12, justifyContent: viewport.isTablet ? 'flex-start' : 'flex-end' }}>
             <a href="#" className="btn btn-light">
               <span>Start a project</span>
               <span className="arrow">→</span>
@@ -36,8 +37,8 @@ const Footer = () => {
         {/* Mid: links + contact */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '2fr 1fr 1fr 1fr',
-          gap: 48,
+          gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : '2fr 1fr 1fr 1fr',
+          gap: viewport.isMobile ? 28 : 48,
           padding: '60px 0 40px',
         }}>
           <div>

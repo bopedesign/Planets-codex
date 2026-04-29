@@ -7,6 +7,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const assetsDir = path.join(distDir, 'assets');
+const RESPONSIVE_GLOBAL_CSS = `
+<style>
+  body { overflow-x: hidden; }
+  @media (max-width: 1180px) {
+    .wrap { padding-left: 32px !important; padding-right: 32px !important; }
+  }
+  @media (max-width: 767px) {
+    .wrap { padding-left: 20px !important; padding-right: 20px !important; }
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>`;
 
 const BABEL_SRC_RE = /<script\s+type="text\/babel"\s+src="([^"]+)"><\/script>/g;
 const INLINE_BABEL_RE = /<script\s+type="text\/babel">([\s\S]*?)<\/script>/;
@@ -94,6 +108,8 @@ async function buildPage(pageFile) {
   for (const pattern of REMOVE_RE) {
     transformedHtml = transformedHtml.replace(pattern, '');
   }
+
+  transformedHtml = transformedHtml.replace('</head>', `${RESPONSIVE_GLOBAL_CSS}\n</head>`);
 
   const bundleScript = `  <script type="module" src="${escapeTemplateContent(bundlePath)}"></script>\n`;
   transformedHtml = transformedHtml.replace('</body>', `${bundleScript}</body>`);

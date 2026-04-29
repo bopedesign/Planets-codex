@@ -2,6 +2,7 @@
    2-col header row: title / supporting copy.
    3×2 grid of service cards, each with a background image and text top-left. */
 const HomeServices = () => {
+  const viewport = useResponsive();
   const cards = [
     {
       title: 'Website Design & Development',
@@ -58,19 +59,19 @@ const HomeServices = () => {
     <section style={{
       background: 'var(--light)',
       color: 'var(--dark)',
-      padding: '120px 0 120px',
+      padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 120px',
     }}>
       <div className="wrap">
         {/* Header row */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 64,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1fr 1fr',
+          gap: viewport.isMobile ? 24 : 64,
           alignItems: 'start',
           marginBottom: 48,
         }}>
           <h2 style={{
-            fontSize: 68,
+            fontSize: pickResponsive(viewport, 68, 56, 40),
             lineHeight: 1.04,
             letterSpacing: '-0.028em',
             fontWeight: 400,
@@ -99,17 +100,17 @@ const HomeServices = () => {
         {/* Cards grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: 24,
+          gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(2, 1fr)',
+          gap: viewport.isMobile ? 18 : 24,
         }}>
-          {cards.map((c, i) => <ServiceCard key={i} {...c} />)}
+          {cards.map((c, i) => <ServiceCard key={i} viewport={viewport} {...c} />)}
         </div>
       </div>
     </section>
   );
 };
 
-const ServiceCard = ({ title, body, bg, art, theme, cta, showArrow = true, variant, tint }) => {
+const ServiceCard = ({ title, body, bg, art, theme, cta, showArrow = true, variant, tint, viewport }) => {
   const [hover, setHover] = React.useState(false);
   const isDark = theme === 'dark';
   const fg   = isDark ? 'var(--light)'           : 'var(--dark)';
@@ -166,7 +167,7 @@ const ServiceCard = ({ title, body, bg, art, theme, cta, showArrow = true, varia
       position: 'relative',
       borderRadius: 10,
       overflow: 'hidden',
-      aspectRatio: '16 / 10',
+      aspectRatio: viewport.isMobile ? '4 / 5' : '16 / 10',
       backgroundColor: isDark ? 'var(--dark-2)' : '#e9e6e2',
       backgroundImage: hasBg ? `url("${bg}")` : (isDark ? darkAtmosphere : lightAtmosphere),
       backgroundSize: 'cover',
@@ -181,10 +182,10 @@ const ServiceCard = ({ title, body, bg, art, theme, cta, showArrow = true, varia
       {showArrow && (
         <div style={{
           position: 'absolute',
-          top: 28,
-          right: 28,
-          width: 38,
-          height: 38,
+          top: viewport.isMobile ? 20 : 28,
+          right: viewport.isMobile ? 20 : 28,
+          width: viewport.isMobile ? 34 : 38,
+          height: viewport.isMobile ? 34 : 38,
           borderRadius: '50%',
           border: `1px solid ${hover ? 'var(--accent)' : ruleColor}`,
           background: hover ? 'var(--accent)' : 'transparent',
@@ -225,8 +226,8 @@ const ServiceCard = ({ title, body, bg, art, theme, cta, showArrow = true, varia
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'flex-start',
-          padding: '0 64px',
-          maxWidth: '72%',
+          padding: viewport.isMobile ? '0 24px' : viewport.isTablet ? '0 40px' : '0 64px',
+          maxWidth: viewport.isMobile ? '100%' : '72%',
         }}>
           <div style={{
             fontSize: 12,
@@ -239,7 +240,7 @@ const ServiceCard = ({ title, body, bg, art, theme, cta, showArrow = true, varia
             Not sure where to start?
           </div>
           <h3 style={{
-            fontSize: 44,
+            fontSize: pickResponsive(viewport, 44, 36, 30),
             fontWeight: 400,
             lineHeight: 1.02,
             letterSpacing: '-0.028em',
@@ -267,12 +268,12 @@ const ServiceCard = ({ title, body, bg, art, theme, cta, showArrow = true, varia
         </div>
       ) : (
         <div style={{
-          padding: '40px 44px 0',
+          padding: viewport.isMobile ? '24px 24px 0' : viewport.isTablet ? '32px 32px 0' : '40px 44px 0',
           position: 'relative',
           zIndex: 2,
         }}>
           <h3 style={{
-            fontSize: 30,
+            fontSize: pickResponsive(viewport, 30, 26, 22),
             fontWeight: 700,
             lineHeight: 1.2,
             letterSpacing: '-0.02em',

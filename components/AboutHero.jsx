@@ -6,6 +6,7 @@
    Bottom: 3-CTA row, same pattern as Portfolio hero. */
 
 const AboutHero = () => {
+  const viewport = useResponsive();
   const stats = [
     { k: 'Founded',       v: '2005' },
     { k: 'Sites shipped', v: '100+' },
@@ -32,13 +33,13 @@ const AboutHero = () => {
 
       <Nav onDark />
 
-      <div className="wrap" style={{ position: 'relative', zIndex: 2, paddingTop: 60 }}>
+      <div className="wrap" style={{ position: 'relative', zIndex: 2, paddingTop: viewport.isMobile ? 28 : 60 }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1.15fr 1fr',
-          gap: 80,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1.15fr 1fr',
+          gap: viewport.isMobile ? 28 : 80,
           alignItems: 'stretch',
-          paddingBottom: 80,
+          paddingBottom: viewport.isMobile ? 48 : 80,
         }}>
           {/* LEFT — editorial column */}
           <div style={{ maxWidth: 720, display: 'flex', flexDirection: 'column' }}>
@@ -53,7 +54,7 @@ const AboutHero = () => {
             </div>
 
             <h1 style={{
-              fontSize: 96,
+              fontSize: pickResponsive(viewport, 96, 72, 48),
               lineHeight: 1.0,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -65,7 +66,7 @@ const AboutHero = () => {
             </h1>
 
             <p style={{
-              fontSize: 19,
+              fontSize: viewport.isMobile ? 16 : 19,
               lineHeight: 1.65,
               color: 'rgba(247,245,243,0.88)',
               margin: '40px 0 20px',
@@ -95,21 +96,21 @@ const AboutHero = () => {
               centered below, hairline divider rules between cells. */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateColumns: viewport.isMobile ? '1fr' : '1fr 1fr',
+            gridTemplateRows: viewport.isMobile ? 'repeat(4, auto)' : '1fr 1fr',
             border: '1px solid var(--rule-dark)',
             position: 'relative',
             alignSelf: 'stretch',
-            minHeight: 460,
+            minHeight: viewport.isMobile ? 'auto' : 460,
           }}>
             {stats.map((s, i) => {
               const col = i % 2;
               const row = Math.floor(i / 2);
               return (
                 <div key={i} style={{
-                  padding: '32px 32px 28px',
-                  borderRight: col === 0 ? '1px solid var(--rule-dark)' : 'none',
-                  borderBottom: row === 0 ? '1px solid var(--rule-dark)' : 'none',
+                  padding: viewport.isMobile ? '24px 22px' : '32px 32px 28px',
+                  borderRight: viewport.isMobile ? 'none' : col === 0 ? '1px solid var(--rule-dark)' : 'none',
+                  borderBottom: viewport.isMobile || row === 0 ? '1px solid var(--rule-dark)' : 'none',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -123,7 +124,7 @@ const AboutHero = () => {
                   </div>
 
                   <div style={{
-                    fontSize: s.smaller ? 24 : 48,
+                    fontSize: s.smaller ? (viewport.isMobile ? 20 : 24) : pickResponsive(viewport, 48, 40, 30),
                     lineHeight: 1.0,
                     letterSpacing: s.smaller ? '-0.018em' : '-0.028em',
                     fontWeight: 400,
@@ -144,7 +145,7 @@ const AboutHero = () => {
         {/* Bottom CTA strip — same pattern as other heroes */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(3, 1fr)',
           borderTop: '1px solid rgba(247,245,243,0.12)',
         }}>
           {[
@@ -156,9 +157,10 @@ const AboutHero = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              padding: '28px 32px 28px 0',
-              paddingLeft: i === 0 ? 0 : 32,
-              borderLeft: i === 0 ? 'none' : '1px solid var(--rule-dark)',
+              padding: viewport.isMobile ? '20px 0' : '28px 32px 28px 0',
+              paddingLeft: viewport.isMobile ? 0 : i === 0 ? 0 : 32,
+              borderLeft: viewport.isMobile || i === 0 ? 'none' : '1px solid var(--rule-dark)',
+              borderTop: viewport.isMobile && i > 0 ? '1px solid var(--rule-dark)' : 'none',
               color: 'var(--light)',
               transition: 'background .2s',
             }}

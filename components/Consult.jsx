@@ -5,6 +5,7 @@ const Star = ({ size = 14, filled = true }) => (
 );
 
 const Consult = ({ noReviews = false, inline = false, reviewsFirst = false, noConsult = false }) => {
+  const viewport = useResponsive();
   const reviews = [
     {
       body: 'They didn\'t just redesign our site. They reshaped how we talk about our business. Inbound leads tripled in the first quarter.',
@@ -25,8 +26,8 @@ const Consult = ({ noReviews = false, inline = false, reviewsFirst = false, noCo
 
   const Wrapper = inline ? 'div' : 'section';
   const wrapperStyle = inline
-    ? { marginTop: 56 }
-    : { background: 'var(--light-2)', padding: '110px 0' };
+    ? { marginTop: viewport.isMobile ? 36 : 56 }
+    : { background: 'var(--light-2)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '90px 0' : '110px 0' };
 
   return (
     <Wrapper style={wrapperStyle}>
@@ -38,7 +39,7 @@ const Consult = ({ noReviews = false, inline = false, reviewsFirst = false, noCo
             {[0,1,2,3,4].map(i => <Star key={i} size={18} />)}
           </div>
           <h2 style={{
-            fontSize: 48,
+            fontSize: pickResponsive(viewport, 48, 42, 34),
             lineHeight: 1.05,
             letterSpacing: '-0.025em',
             fontWeight: 400,
@@ -50,12 +51,12 @@ const Consult = ({ noReviews = false, inline = false, reviewsFirst = false, noCo
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginBottom: 90 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)', gap: 24, marginBottom: 90 }}>
           {reviews.map((r, i) => (
             <figure key={i} style={{
               background: 'var(--light)',
               border: '1px solid var(--rule-light)',
-              padding: '32px 28px',
+              padding: viewport.isMobile ? '24px 22px' : '32px 28px',
               margin: 0,
               display: 'flex',
               flexDirection: 'column',
@@ -93,10 +94,10 @@ const Consult = ({ noReviews = false, inline = false, reviewsFirst = false, noCo
         <div style={{
           background: 'var(--light)',
           border: '1px solid var(--rule-light)',
-          padding: '56px 60px',
+          padding: viewport.isMobile ? '28px 24px' : viewport.isTablet ? '44px 40px' : '56px 60px',
           display: 'grid',
-          gridTemplateColumns: '1.4fr 1fr',
-          gap: 60,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1.4fr 1fr',
+          gap: viewport.isMobile ? 24 : 60,
           alignItems: 'center',
           marginBottom: (noReviews || reviewsFirst) ? 0 : 90,
           position: 'relative',
@@ -104,7 +105,7 @@ const Consult = ({ noReviews = false, inline = false, reviewsFirst = false, noCo
           <div>
             <div className="eyebrow" style={{ marginBottom: 18 }}>No obligation · 30 min</div>
             <h2 style={{
-              fontSize: 44,
+              fontSize: pickResponsive(viewport, 44, 38, 30),
               lineHeight: 1.05,
               letterSpacing: '-0.025em',
               fontWeight: 400,
@@ -123,7 +124,7 @@ const Consult = ({ noReviews = false, inline = false, reviewsFirst = false, noCo
               <span>Schedule a consultation</span>
               <span className="arrow">→</span>
             </a>
-            <div style={{ display: 'flex', gap: 18, fontSize: 13, color: 'var(--muted-light)', marginTop: 8 }}>
+            <div style={{ display: 'flex', flexDirection: viewport.isMobile ? 'column' : 'row', gap: 18, fontSize: 13, color: 'var(--muted-light)', marginTop: 8 }}>
               <span>📞 541-555-0142</span>
               <span>✉ hello@nineplanets.co</span>
             </div>
@@ -138,7 +139,7 @@ const Consult = ({ noReviews = false, inline = false, reviewsFirst = false, noCo
             {[0,1,2,3,4].map(i => <Star key={i} size={18} />)}
           </div>
           <h2 style={{
-            fontSize: 48,
+            fontSize: pickResponsive(viewport, 48, 42, 34),
             lineHeight: 1.05,
             letterSpacing: '-0.025em',
             fontWeight: 400,
@@ -150,12 +151,12 @@ const Consult = ({ noReviews = false, inline = false, reviewsFirst = false, noCo
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)', gap: 24 }}>
           {reviews.map((r, i) => (
             <figure key={i} style={{
               background: 'var(--light)',
               border: '1px solid var(--rule-light)',
-              padding: '32px 28px',
+              padding: viewport.isMobile ? '24px 22px' : '32px 28px',
               margin: 0,
               display: 'flex',
               flexDirection: 'column',
