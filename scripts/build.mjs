@@ -193,7 +193,7 @@ function getPreloadLinks(componentPaths) {
     return '';
   }
 
-  return '  <link rel="preload" as="image" href="images/heroBackground-100.jpg" fetchpriority="high">\n';
+  return '  <link rel="preload" as="image" href="images/heroBackground-100.jpg" imagesrcset="images/heroBackground-100-mobile.jpg 700w, images/heroBackground-100.jpg 1600w" imagesizes="100vw" fetchpriority="high">\n';
 }
 
 async function buildPage(pageFile) {

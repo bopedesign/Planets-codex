@@ -12,14 +12,24 @@ const QuoteHero = () => {
       overflow: 'hidden',
     }}>
       {/* Photo background — same as home hero */}
-      <div aria-hidden="true" style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: 'url("images/heroBackground-100.jpg")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }} />
+      <picture aria-hidden="true" style={{ position: 'absolute', inset: 0, display: 'block' }}>
+        <source media="(max-width: 767px)" srcSet="images/heroBackground-100-mobile.jpg" />
+        <img
+          src="images/heroBackground-100.jpg"
+          alt=""
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
+        />
+      </picture>
       {/* Darkening gradient for legibility on the left */}
       <div aria-hidden="true" style={{
         position: 'absolute',

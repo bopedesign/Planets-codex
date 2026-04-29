@@ -212,6 +212,12 @@ const StarField = () => {
 
 const HomeHero = () => {
   const viewport = useResponsive();
+  const [hasHydrated, setHasHydrated] = React.useState(false);
+  React.useEffect(() => {
+    setHasHydrated(true);
+  }, []);
+  const showAtmosphere = hasHydrated && !viewport.isMobile;
+
   const ctas = [
     { label: 'Get a Quote', sub: 'When you are ready to move', href: 'Get a Quote.html' },
     { label: 'Our Process', sub: 'How we make your vision work' },
@@ -229,20 +235,31 @@ const HomeHero = () => {
       overflow: 'hidden',
     }}>
       {/* Background image */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: 'url("images/heroBackground-100.jpg")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }} />
+      <picture style={{ position: 'absolute', inset: 0, display: 'block' }}>
+        <source media="(max-width: 767px)" srcSet="images/heroBackground-100-mobile.jpg" />
+        <img
+          src="images/heroBackground-100.jpg"
+          alt=""
+          aria-hidden="true"
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
+        />
+      </picture>
 
       {/* ✨ Star field layer */}
-      <StarField />
+      {showAtmosphere && <StarField />}
 
       {/* 🪐 Orbital rings layer */}
-      <OrbitalRings />
+      {showAtmosphere && <OrbitalRings />}
 
       {/* Subtle darkening for legibility on the left */}
       <div style={{
