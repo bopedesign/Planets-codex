@@ -7,6 +7,7 @@
    service name. Monochromatic on dark with pink accents. */
 
 const TechHero = () => {
+  const viewport = useResponsive();
   // ─── Ticket stack graphic ────────────────────────────────────────────
   const Ticket = ({ x, y, rot, active, title, meta, status, statusColor, lines }) => (
     <g transform={`translate(${x},${y}) rotate(${rot})`} opacity={active ? 1 : 0.5}>
@@ -107,7 +108,7 @@ const TechHero = () => {
       color: 'var(--light)',
       position: 'relative',
       overflow: 'hidden',
-      minHeight: 825,
+      minHeight: viewport.isTablet ? 'auto' : 825,
     }}>
       {/* Sand wash — top-right soft glow to spotlight the ticket graphic */}
       <div style={{
@@ -132,7 +133,7 @@ const TechHero = () => {
 
       <div className="wrap" style={{
         position: 'relative',
-        padding: '90px 56px 0',
+        padding: viewport.isMobile ? '28px 0 0' : viewport.isTablet ? '56px 0 0' : '90px 56px 0',
         zIndex: 3,
         display: 'flex',
         flexDirection: 'column',
@@ -142,8 +143,8 @@ const TechHero = () => {
         {/* Title block + graphic row */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr auto',
-          gap: 80,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1fr auto',
+          gap: viewport.isMobile ? 28 : 80,
           alignItems: 'center',
           paddingBottom: 70,
         }}>
@@ -159,7 +160,7 @@ const TechHero = () => {
               <span style={{ color: 'var(--light)' }}>Tech Support &amp; Security</span>
             </div>
             <h1 style={{
-              fontSize: 92,
+              fontSize: pickResponsive(viewport, 92, 72, 48),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -180,7 +181,7 @@ const TechHero = () => {
           </div>
 
           {/* Ticket queue graphic — horizontal layout */}
-          <div style={{ position: 'relative', width: 760, height: 360, flexShrink: 0 }}>
+          <div style={{ position: 'relative', width: viewport.isMobile ? '100%' : viewport.isTablet ? 620 : 760, height: viewport.isMobile ? 260 : viewport.isTablet ? 300 : 360, flexShrink: 0 }}>
             <svg
               width="760"
               height="360"
@@ -284,7 +285,7 @@ const TechHero = () => {
         {/* Bottom CTA strip */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(3, 1fr)',
           borderTop: '1px solid rgba(247,245,243,0.12)',
           marginTop: 'auto',
         }}>
@@ -297,8 +298,8 @@ const TechHero = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              padding: '28px 32px 28px 0',
-              paddingLeft: i === 0 ? 0 : 32,
+              padding: viewport.isMobile ? '20px 0' : '28px 32px 28px 0',
+              paddingLeft: viewport.isMobile ? 0 : i === 0 ? 0 : 32,
               borderLeft: i === 0 ? 'none' : '1px solid var(--rule-dark)',
               color: 'var(--light)',
               transition: 'background .2s',

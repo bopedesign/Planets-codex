@@ -6,6 +6,7 @@
    industries) that doubles as the bottom border of the hero. */
 
 const PortfolioHero = () => {
+  const viewport = useResponsive();
   // Featured projects, each rendered as a mini website mockup inside a
   // browser frame. Restricted to the brand palette so they don't compete
   // with the rest of the site visually.
@@ -94,8 +95,8 @@ const PortfolioHero = () => {
       <div className="wrap" style={{ position: 'relative', zIndex: 2, paddingTop: 60 }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr auto',
-          gap: 60,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1fr auto',
+          gap: viewport.isMobile ? 28 : 60,
           alignItems: 'center',
           paddingBottom: 80,
         }}>
@@ -111,7 +112,7 @@ const PortfolioHero = () => {
             </div>
 
             <h1 style={{
-              fontSize: 96,
+              fontSize: pickResponsive(viewport, 96, 72, 48),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -175,8 +176,8 @@ const PortfolioHero = () => {
           {/* Orthogonal 2-card stack — back card peeks out, front card slides on the swap */}
           <div style={{
             position: 'relative',
-            width: CARD_W + 36,
-            height: CARD_H + 36,
+            width: viewport.isMobile ? '100%' : CARD_W + 36,
+            height: viewport.isMobile ? 260 : CARD_H + 36,
             flexShrink: 0,
           }}>
             {/* Back card — next project, hairline outline only */}
@@ -294,7 +295,7 @@ const PortfolioHero = () => {
         {/* Bottom CTA strip — matches other service page heroes */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(3, 1fr)',
           borderTop: '1px solid rgba(247,245,243,0.12)',
         }}>
           {[
@@ -306,8 +307,8 @@ const PortfolioHero = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              padding: '28px 32px 28px 0',
-              paddingLeft: i === 0 ? 0 : 32,
+              padding: viewport.isMobile ? '20px 0' : '28px 32px 28px 0',
+              paddingLeft: viewport.isMobile ? 0 : i === 0 ? 0 : 32,
               borderLeft: i === 0 ? 'none' : '1px solid var(--rule-dark)',
               color: 'var(--light)',
               transition: 'background .2s',

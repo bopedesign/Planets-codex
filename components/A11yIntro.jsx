@@ -2,6 +2,7 @@
    Mirrors the SeoIntro structure (headline + eyebrow + 3-col pillar grid)
    so services feel consistent, but the copy is tuned to access, not SEO. */
 const A11yIntro = () => {
+  const viewport = useResponsive();
   const pillars = [
     {
       num: '01',
@@ -24,13 +25,13 @@ const A11yIntro = () => {
   ];
 
   return (
-    <section style={{ background: 'var(--light)', padding: '120px 0 110px' }}>
+    <section style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 110px' }}>
       <div className="wrap">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'end', marginBottom: 70 }}>
           <div>
             <div className="eyebrow" style={{ marginBottom: 22 }}>What accessibility means, in practice</div>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -48,10 +49,10 @@ const A11yIntro = () => {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 0, borderTop: '1px solid var(--rule-light)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)', gap: 0, borderTop: '1px solid var(--rule-light)' }}>
           {pillars.map((s, i) => (
             <div key={i} style={{
-              padding: '40px 32px 36px',
+              padding: viewport.isMobile ? '24px 20px' : '40px 32px 36px',
               paddingLeft: i === 0 ? 0 : 36,
               paddingRight: i === 2 ? 0 : 36,
               borderLeft: i === 0 ? 'none' : '1px solid var(--rule-light)',
@@ -74,7 +75,7 @@ const A11yIntro = () => {
                 </span>
               </div>
               <h3 style={{
-                fontSize: 30,
+                fontSize: viewport.isMobile ? 24 : 30,
                 fontWeight: 400,
                 letterSpacing: '-0.022em',
                 margin: '0 0 14px',

@@ -3,6 +3,7 @@
    Visually echoes the A11y pages' darker "process" bands. */
 
 const TechHowItWorks = () => {
+  const viewport = useResponsive();
   const steps = [
     {
       num: '01',
@@ -46,7 +47,7 @@ const TechHowItWorks = () => {
     <section id="how-it-works" style={{
       background: 'var(--dark)',
       color: 'var(--light)',
-      padding: '120px 0 110px',
+      padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 110px',
       position: 'relative',
     }}>
       {/* Subtle soft wash */}
@@ -62,14 +63,14 @@ const TechHowItWorks = () => {
       <div className="wrap" style={{ position: 'relative' }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 80,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1fr 1fr',
+          gap: viewport.isMobile ? 24 : 80,
           alignItems: 'end',
           marginBottom: 70,
         }}>
           <div>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -91,12 +92,12 @@ const TechHowItWorks = () => {
         {/* 3-step grid — left-aligned numbers + icons + copy, separated by rules */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
           borderTop: '1px solid var(--rule-dark)',
         }}>
           {steps.map((s, i) => (
             <div key={i} style={{
-              padding: '48px 36px 44px',
+              padding: viewport.isMobile ? '28px 22px' : '48px 36px 44px',
               paddingLeft: i === 0 ? 0 : 40,
               paddingRight: i === 2 ? 0 : 40,
               borderLeft: i === 0 ? 'none' : '1px solid var(--rule-dark)',

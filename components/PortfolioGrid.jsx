@@ -201,6 +201,7 @@ const PortfolioCard = ({ project }) => {
 };
 
 const PortfolioGrid = () => {
+  const viewport = useResponsive();
   // 12 projects across varied industries. The three with `image` use
   // real screenshots we already have; the other nine use typographic
   // tile treatments with brand-color palettes.
@@ -365,7 +366,7 @@ const PortfolioGrid = () => {
           <div>
             <div className="eyebrow" style={{ marginBottom: 22 }}>Selected work</div>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -390,7 +391,7 @@ const PortfolioGrid = () => {
         {/* 3-column uniform grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
           gap: 24,
         }}>
           {projects.map((p, i) => (

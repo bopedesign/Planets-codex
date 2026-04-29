@@ -1,4 +1,5 @@
 const SeoHero = () => {
+  const viewport = useResponsive();
   // Keyword pools — each entry can be a string or { kw, rank } for ranked rows.
   const colA = [
     { kw: 'local seo', rank: 3 },
@@ -198,7 +199,7 @@ const SeoHero = () => {
 
       <Nav onDark />
 
-      <div className="wrap" style={{ position: 'relative', padding: '90px 56px 0', zIndex: 3 }}>
+      <div className="wrap" style={{ position: 'relative', padding: viewport.isMobile ? '28px 0 0' : viewport.isTablet ? '56px 0 0' : '90px 56px 0', zIndex: 3 }}>
         {/* Breadcrumb */}
         <div style={{
           display: 'flex',
@@ -218,7 +219,7 @@ const SeoHero = () => {
         {/* Title block — single column on the left, ticker fills the right via absolute layer */}
         <div style={{ paddingBottom: 70, maxWidth: 760, position: 'relative', zIndex: 4 }}>
           <h1 style={{
-            fontSize: 92,
+            fontSize: pickResponsive(viewport, 92, 72, 48),
             lineHeight: 1.02,
             letterSpacing: '-0.028em',
             fontWeight: 400,
@@ -243,7 +244,7 @@ const SeoHero = () => {
         {/* Bottom CTA strip — matches service page pattern */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(3, 1fr)',
           gap: 0,
           borderTop: '1px solid var(--rule-dark)',
           position: 'relative',

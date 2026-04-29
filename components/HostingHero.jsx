@@ -3,6 +3,7 @@
    Right: a "server rack" graphic with status lights, uptime meter, and a
    small Eugene, OR location badge. */
 const HostingHero = () => {
+  const viewport = useResponsive();
 
   // Single rack-row component. Each row reads as 1U slot with status lights,
   // a label, and a small bandwidth waveform.
@@ -54,7 +55,7 @@ const HostingHero = () => {
       color: 'var(--light)',
       position: 'relative',
       overflow: 'hidden',
-      minHeight: 825,
+      minHeight: viewport.isTablet ? 'auto' : 825,
     }}>
       {/* Sand wash — top-right soft glow */}
       <div style={{
@@ -80,7 +81,7 @@ const HostingHero = () => {
       <div className="wrap" style={{
         position: 'relative',
         zIndex: 2,
-        paddingTop: 60,
+        paddingTop: viewport.isMobile ? 28 : 60,
         paddingBottom: 0,
         display: 'flex',
         flexDirection: 'column',
@@ -89,8 +90,8 @@ const HostingHero = () => {
         {/* Title block + graphic row */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr auto',
-          gap: 80,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1fr auto',
+          gap: viewport.isMobile ? 28 : 80,
           alignItems: 'center',
           paddingBottom: 70,
         }}>
@@ -107,7 +108,7 @@ const HostingHero = () => {
             </div>
 
             <h1 style={{
-              fontSize: 92,
+              fontSize: pickResponsive(viewport, 92, 72, 48),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -130,7 +131,7 @@ const HostingHero = () => {
           </div>
 
           {/* Server rack graphic */}
-          <div style={{ position: 'relative', width: 799, height: 460, flexShrink: 0 }}>
+          <div style={{ position: 'relative', width: viewport.isMobile ? '100%' : viewport.isTablet ? 620 : 799, height: viewport.isMobile ? 320 : viewport.isTablet ? 380 : 460, flexShrink: 0 }}>
             <svg
               width="799"
               height="460"
@@ -291,7 +292,7 @@ const HostingHero = () => {
         {/* Bottom CTA strip */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(3, 1fr)',
           borderTop: '1px solid rgba(247,245,243,0.12)',
           marginTop: 'auto',
         }}>
@@ -304,8 +305,8 @@ const HostingHero = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              padding: '28px 32px 28px 0',
-              paddingLeft: i === 0 ? 0 : 32,
+              padding: viewport.isMobile ? '20px 0' : '28px 32px 28px 0',
+              paddingLeft: viewport.isMobile ? 0 : i === 0 ? 0 : 32,
               borderLeft: i === 0 ? 'none' : '1px solid var(--rule-dark)',
               color: 'var(--light)',
               transition: 'background .2s',

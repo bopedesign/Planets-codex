@@ -5,6 +5,7 @@
    visual vocabulary from the other service heroes (no atmospheric glows,
    no scrolling text). */
 const A11yHero = () => {
+  const viewport = useResponsive();
   // Graphic is designed for a FIXED landscape canvas of 640 x 420 px.
   // Upper region (4 cols x 2 rows) holds UI blocks with landscape proportions.
   // Lower region spans the full width and hosts the screen reader readout.
@@ -66,7 +67,7 @@ const A11yHero = () => {
       color: 'var(--light)',
       position: 'relative',
       overflow: 'hidden',
-      minHeight: 825,
+      minHeight: viewport.isTablet ? 'auto' : 825,
     }}>
       {/* Subtle horizontal bands — a faint grid texture that suggests structure
           and reading order, distinct from the radial glows on other heroes. */}
@@ -96,7 +97,7 @@ const A11yHero = () => {
 
       <div className="wrap" style={{
         position: 'relative',
-        padding: '90px 56px 0',
+        padding: viewport.isMobile ? '28px 0 0' : viewport.isTablet ? '56px 0 0' : '90px 56px 0',
         zIndex: 3,
         display: 'flex',
         flexDirection: 'column',
@@ -107,8 +108,8 @@ const A11yHero = () => {
             is a single css property, not a manual shift. */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 640px',
-          gap: 48,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1fr 640px',
+          gap: viewport.isMobile ? 28 : 48,
           alignItems: 'center',
           paddingBottom: 41,
           position: 'relative',
@@ -131,7 +132,7 @@ const A11yHero = () => {
               <span style={{ color: 'var(--light)' }}>Website Accessibility</span>
             </div>
             <h1 style={{
-              fontSize: 92,
+              fontSize: pickResponsive(viewport, 92, 72, 48),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -164,11 +165,11 @@ const A11yHero = () => {
             justifyContent: 'flex-start',
           }}>
             <svg
-              width="640"
-              height="420"
+              width={viewport.isMobile ? '100%' : viewport.isTablet ? '520' : '640'}
+              height={viewport.isMobile ? '300' : viewport.isTablet ? '340' : '420'}
               viewBox="-10 -10 660 440"
               preserveAspectRatio="xMidYMid meet"
-              style={{ display: 'block', flexShrink: 0, width: 640, height: 420, overflow: 'visible' }}
+              style={{ display: 'block', flexShrink: 0, width: viewport.isMobile ? '100%' : viewport.isTablet ? 520 : 640, height: viewport.isMobile ? 300 : viewport.isTablet ? 340 : 420, overflow: 'visible', maxWidth: '100%' }}
               aria-hidden="true"
             >
               {/* Cells */}
@@ -366,7 +367,7 @@ const A11yHero = () => {
         {/* Bottom CTA strip */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(3, 1fr)',
           gap: 0,
           borderTop: '1px solid var(--rule-dark)',
           marginTop: 'auto',

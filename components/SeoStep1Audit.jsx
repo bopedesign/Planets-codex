@@ -1,4 +1,5 @@
 const SeoStep1Audit = () => {
+  const viewport = useResponsive();
   // Inline SVG icons — single-stroke, monochrome, scaled to 22px.
   const Icon = ({ d, size = 22 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -71,7 +72,7 @@ const SeoStep1Audit = () => {
     <section id="step-test" style={{
       background: 'var(--dark)',
       color: 'var(--light)',
-      padding: '120px 0 130px',
+      padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 130px',
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -91,7 +92,7 @@ const SeoStep1Audit = () => {
               </span>
             </div>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -111,7 +112,7 @@ const SeoStep1Audit = () => {
         {/* Checklist grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
           gap: 0,
           borderTop: '1px solid var(--rule-dark)',
           borderBottom: '1px solid var(--rule-dark)',
@@ -163,8 +164,8 @@ const SeoStep1Audit = () => {
         <div style={{
           marginTop: 70,
           display: 'grid',
-          gridTemplateColumns: '1.4fr 1fr',
-          gap: 60,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1.4fr 1fr',
+          gap: viewport.isMobile ? 24 : 60,
           alignItems: 'center',
         }}>
           <div>

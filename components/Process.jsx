@@ -1,4 +1,5 @@
 const Process = () => {
+  const viewport = useResponsive();
   const steps = [
     {
       num: '01',
@@ -47,13 +48,13 @@ const Process = () => {
   const [active, setActive] = React.useState(0);
 
   return (
-    <section style={{ background: 'var(--light)', padding: '120px 0 130px' }}>
+    <section style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 130px' }}>
       <div className="wrap">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'end', marginBottom: 70 }}>
           <div>
             <div className="eyebrow" style={{ marginBottom: 22 }}>Our process</div>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -133,11 +134,11 @@ const Process = () => {
           <div style={{
             background: 'var(--dark)',
             color: 'var(--light)',
-            padding: '48px 44px',
+            padding: viewport.isMobile ? '28px 22px' : '48px 44px',
             position: 'sticky',
             top: 20,
             alignSelf: 'start',
-            minHeight: 400,
+            minHeight: viewport.isTablet ? 'auto' : 400,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',

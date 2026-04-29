@@ -3,6 +3,7 @@
    as the redesigned TechProSupport grid. */
 
 const HostingFeatures = () => {
+  const viewport = useResponsive();
   const features = [
     {
       title: 'LiteSpeed servers',
@@ -70,19 +71,19 @@ const HostingFeatures = () => {
   ];
 
   return (
-    <section id="features" style={{ background: 'var(--light)', padding: '120px 0 110px' }}>
+    <section id="features" style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 110px' }}>
       <div className="wrap">
         {/* Header */}
         <div style={{ marginBottom: 80, maxWidth: 1100 }}>
           <div className="eyebrow" style={{ marginBottom: 22 }}>What's included</div>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: '1.4fr 1fr',
-            gap: 80,
+            gridTemplateColumns: viewport.isTablet ? '1fr' : '1.4fr 1fr',
+          gap: viewport.isMobile ? 24 : 80,
             alignItems: 'end',
           }}>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -107,7 +108,7 @@ const HostingFeatures = () => {
         {/* Feature card grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
           gap: 0,
           borderTop: '1px solid var(--rule-light)',
           borderLeft: '1px solid var(--rule-light)',
@@ -116,7 +117,7 @@ const HostingFeatures = () => {
             <div key={i} style={{
               borderRight: '1px solid var(--rule-light)',
               borderBottom: '1px solid var(--rule-light)',
-              padding: '40px 36px 44px',
+              padding: viewport.isMobile ? '24px 20px' : '40px 36px 44px',
               background: 'var(--light)',
             }}>
               <div style={{
@@ -154,7 +155,7 @@ const HostingFeatures = () => {
           <div style={{
             borderRight: '1px solid var(--rule-light)',
             borderBottom: '1px solid var(--rule-light)',
-            padding: '40px 36px 44px',
+            padding: viewport.isMobile ? '24px 20px' : '40px 36px 44px',
             background: 'var(--dark)',
             color: 'var(--light)',
             display: 'flex',

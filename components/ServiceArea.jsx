@@ -1,4 +1,5 @@
 const ServiceArea = () => {
+  const viewport = useResponsive();
   const cities = [
     'Coburg', 'Cottage Grove', 'Creswell', 'Dunes City',
     'Elmira', 'Florence', 'Junction City', 'Lowell',
@@ -7,13 +8,13 @@ const ServiceArea = () => {
   ];
 
   return (
-    <section style={{ background: 'var(--light)', padding: '110px 0', position: 'relative' }}>
+    <section style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '110px 0', position: 'relative' }}>
       <div className="wrap">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 90, alignItems: 'start' }}>
           <div>
             <div className="eyebrow" style={{ marginBottom: 22 }}>Service area</div>
             <h2 style={{
-              fontSize: 54,
+              fontSize: pickResponsive(viewport, 54, 44, 32),
               lineHeight: 1.03,
               letterSpacing: '-0.025em',
               fontWeight: 400,
@@ -83,7 +84,7 @@ const ServiceArea = () => {
 
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
+                gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(2, 1fr)',
                 gap: '12px 32px',
                 fontSize: 15,
               }}>

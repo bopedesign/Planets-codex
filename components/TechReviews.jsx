@@ -8,6 +8,7 @@ const TechStar = ({ size = 14, filled = true }) => (
 );
 
 const TechReviews = () => {
+  const viewport = useResponsive();
   const reviews = [
     {
       body: 'Had a checkout bug on a Friday afternoon. Submitted a ticket, they had it patched before end of day. Saved our whole weekend of sales.',
@@ -27,14 +28,14 @@ const TechReviews = () => {
   ];
 
   return (
-    <section style={{ background: 'var(--light)', padding: '110px 0' }}>
+    <section style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '90px 0' : '110px 0' }}>
       <div className="wrap">
         <div style={{ textAlign: 'left', marginBottom: 56 }}>
           <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 4, marginBottom: 20 }}>
             {[0,1,2,3,4].map(i => <TechStar key={i} size={18} />)}
           </div>
           <h2 style={{
-            fontSize: 48,
+            fontSize: pickResponsive(viewport, 48, 42, 34),
             lineHeight: 1.05,
             letterSpacing: '-0.025em',
             fontWeight: 400,
@@ -47,7 +48,7 @@ const TechReviews = () => {
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)', gap: 24 }}>
           {reviews.map((r, i) => (
             <figure key={i} style={{
               background: 'var(--light-2)',

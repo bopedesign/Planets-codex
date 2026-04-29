@@ -3,6 +3,7 @@
    diagnostic-style "report excerpt" panel on the right showing checks,
    so it visually contrasts with the keyword-ticker hero. */
 const A11yReview = () => {
+  const viewport = useResponsive();
   // Sample audit findings — illustrative, not real numbers. Show pass + warn
   // so the panel reads as a "real" report, not a mock-up.
   const findings = [
@@ -25,7 +26,7 @@ const A11yReview = () => {
     <section id="review" style={{
       background: 'var(--dark)',
       color: 'var(--light)',
-      padding: '130px 0 130px',
+      padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '130px 0 130px',
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -46,7 +47,7 @@ const A11yReview = () => {
               </span>
             </div>
             <h2 style={{
-              fontSize: 64,
+              fontSize: pickResponsive(viewport, 64, 52, 36),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,

@@ -4,6 +4,7 @@
    in a 4-column grid with a pin glyph and city name. */
 
 const HostingService = () => {
+  const viewport = useResponsive();
   const cities = [
     { name: 'Eugene',        primary: true },
     { name: 'Springfield' },
@@ -21,7 +22,7 @@ const HostingService = () => {
     <section style={{
       background: 'var(--dark)',
       color: 'var(--light)',
-      padding: '110px 0 110px',
+      padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '110px 0 110px',
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -39,15 +40,15 @@ const HostingService = () => {
         {/* Header */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1.4fr 1fr',
-          gap: 80,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1.4fr 1fr',
+          gap: viewport.isMobile ? 24 : 80,
           alignItems: 'end',
           marginBottom: 70,
         }}>
           <div>
             <div className="eyebrow" data-on="dark" style={{ marginBottom: 22 }}>Service Area</div>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -72,7 +73,7 @@ const HostingService = () => {
         {/* Cities grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(5, 1fr)',
           gap: 0,
           borderTop: '1px solid var(--rule-dark)',
           borderLeft: '1px solid var(--rule-dark)',

@@ -1,4 +1,5 @@
 const SeoStep2Tune = () => {
+  const viewport = useResponsive();
   const Icon = ({ d, size = 26 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
@@ -59,7 +60,7 @@ const SeoStep2Tune = () => {
   ];
 
   return (
-    <section id="step-tune" style={{ background: 'var(--light)', padding: '120px 0 130px' }}>
+    <section id="step-tune" style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 130px' }}>
       <div className="wrap">
         {/* Section header */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'end', marginBottom: 70 }}>
@@ -70,7 +71,7 @@ const SeoStep2Tune = () => {
               </span>
             </div>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -91,7 +92,7 @@ const SeoStep2Tune = () => {
         {/* Two-column service cards */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(2, 1fr)',
           gap: 0,
           borderTop: '1px solid var(--rule-light)',
         }}>

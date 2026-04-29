@@ -151,6 +151,7 @@ const PortfolioRow = ({ project, i, reverse }) => {
 };
 
 const Portfolio = () => {
+  const viewport = useResponsive();
   const projects = [
     {
       name: 'Plums Café',
@@ -191,13 +192,13 @@ const Portfolio = () => {
   ];
 
   return (
-    <section style={{ background: 'var(--light-2)', padding: '110px 0' }}>
+    <section style={{ background: 'var(--light-2)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '110px 0' }}>
       <div className="wrap">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'end', marginBottom: 56 }}>
           <div>
             <div className="eyebrow" style={{ marginBottom: 22 }}>Recent work</div>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,

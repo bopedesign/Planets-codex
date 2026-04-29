@@ -1,4 +1,5 @@
 const MoreThanDesign = () => {
+  const viewport = useResponsive();
   const pillars = [
     {
       num: '01',
@@ -27,7 +28,7 @@ const MoreThanDesign = () => {
     <section style={{
       background: 'var(--dark)',
       color: 'var(--light)',
-      padding: '110px 0',
+      padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '90px 0' : '110px 0',
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -42,7 +43,7 @@ const MoreThanDesign = () => {
           <div>
             <div className="eyebrow" data-on="dark" style={{ marginBottom: 22 }}>Not just pretty pixels</div>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -59,7 +60,7 @@ const MoreThanDesign = () => {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 0, borderTop: '1px solid var(--rule-dark)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)', gap: 0, borderTop: '1px solid var(--rule-dark)' }}>
           {pillars.map((p, i) => (
             <div key={i} style={{
               padding: '36px 32px 36px',

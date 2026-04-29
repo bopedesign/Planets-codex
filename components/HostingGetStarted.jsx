@@ -3,10 +3,11 @@
    visual element with sub-actions. */
 
 const HostingGetStarted = () => {
+  const viewport = useResponsive();
   return (
     <section id="getting-started" style={{
       background: 'var(--light)',
-      padding: '120px 0 130px',
+      padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 130px',
     }}>
       <div className="wrap">
         <div style={{
@@ -14,8 +15,8 @@ const HostingGetStarted = () => {
           border: '1px solid var(--rule-light)',
           padding: '80px 90px',
           display: 'grid',
-          gridTemplateColumns: '1fr 1.1fr',
-          gap: 90,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1fr 1.1fr',
+          gap: viewport.isMobile ? 24 : 90,
           alignItems: 'center',
           position: 'relative',
         }}>
@@ -23,7 +24,7 @@ const HostingGetStarted = () => {
           <div>
             <div className="eyebrow" style={{ marginBottom: 22 }}>Just getting started?</div>
             <h2 style={{
-              fontSize: 56,
+              fontSize: pickResponsive(viewport, 56, 46, 34),
               lineHeight: 1.04,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -78,7 +79,7 @@ const HostingGetStarted = () => {
 
             <a href="tel:5413592906" style={{
               display: 'block',
-              fontSize: 64,
+              fontSize: pickResponsive(viewport, 64, 52, 36),
               lineHeight: 1,
               letterSpacing: '-0.04em',
               fontWeight: 400,
@@ -107,7 +108,7 @@ const HostingGetStarted = () => {
               paddingTop: 24,
               borderTop: '1px solid var(--rule-light)',
               display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
+              gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
               gap: 12,
             }}>
               {[

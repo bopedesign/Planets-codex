@@ -3,6 +3,7 @@
    reviews. Each has a small index, an icon, a tight headline and copy. */
 
 const TechWhy = () => {
+  const viewport = useResponsive();
   const items = [
     {
       num: '01',
@@ -51,7 +52,7 @@ const TechWhy = () => {
         <div style={{ marginBottom: 56, maxWidth: 720 }}>
           <div className="eyebrow" style={{ marginBottom: 22 }}>Why Pro Support works</div>
           <h2 style={{
-            fontSize: 48,
+            fontSize: pickResponsive(viewport, 48, 42, 34),
             lineHeight: 1.05,
             letterSpacing: '-0.025em',
             fontWeight: 400,
@@ -62,12 +63,12 @@ const TechWhy = () => {
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)', gap: 24 }}>
           {items.map((it, i) => (
             <div key={i} style={{
               background: 'var(--light)',
               border: '1px solid var(--rule-light)',
-              padding: '40px 32px 36px',
+              padding: viewport.isMobile ? '24px 20px' : '40px 32px 36px',
               display: 'flex',
               flexDirection: 'column',
               gap: 20,

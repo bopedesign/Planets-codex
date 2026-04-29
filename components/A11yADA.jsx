@@ -3,15 +3,16 @@
    "before / after" treatment of a single fix so the section is concrete
    instead of abstract. */
 const A11yADA = () => {
+  const viewport = useResponsive();
   return (
-    <section id="ada" style={{ background: 'var(--light-2)', padding: '130px 0 120px' }}>
+    <section id="ada" style={{ background: 'var(--light-2)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '130px 0 120px' }}>
       <div className="wrap">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 90, alignItems: 'start' }}>
           {/* Left: copy */}
           <div>
             <div className="eyebrow" style={{ marginBottom: 22 }}>03 &middot; Making your site ADA compliant</div>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,

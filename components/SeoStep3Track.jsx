@@ -1,4 +1,5 @@
 const SeoStep3Track = () => {
+  const viewport = useResponsive();
   const tiers = [
     {
       name: 'Local Search Tracker',
@@ -75,7 +76,7 @@ const SeoStep3Track = () => {
   ];
 
   return (
-    <section id="step-track" style={{ background: 'var(--light-2)', padding: '120px 0 130px' }}>
+    <section id="step-track" style={{ background: 'var(--light-2)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 130px' }}>
       <div className="wrap">
         {/* Section header */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'end', marginBottom: 70 }}>
@@ -86,7 +87,7 @@ const SeoStep3Track = () => {
               </span>
             </div>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -107,7 +108,7 @@ const SeoStep3Track = () => {
         {/* Pricing tiers */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
           gap: 0,
           alignItems: 'stretch',
         }}>
@@ -172,7 +173,7 @@ const SeoStep3Track = () => {
                 {/* Price */}
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 30, paddingBottom: 26, borderBottom: featured ? '1px solid var(--rule-dark)' : '1px solid var(--rule-light)' }}>
                   <span style={{
-                    fontSize: 64,
+                    fontSize: pickResponsive(viewport, 64, 52, 36),
                     fontWeight: 300,
                     letterSpacing: '-0.04em',
                     lineHeight: 1,

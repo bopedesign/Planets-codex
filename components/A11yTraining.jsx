@@ -1,11 +1,12 @@
 /* Section 04 — Training (dark bg) + closing CTA strip with the two buttons:
    "View Accessibility Packages" and "Schedule a Free Consultation". */
 const A11yTraining = () => {
+  const viewport = useResponsive();
   return (
     <section id="training" style={{
       background: 'var(--dark)',
       color: 'var(--light)',
-      padding: '130px 0 130px',
+      padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '130px 0 130px',
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -28,7 +29,7 @@ const A11yTraining = () => {
               </span>
             </div>
             <h2 style={{
-              fontSize: 64,
+              fontSize: pickResponsive(viewport, 64, 52, 36),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -49,7 +50,7 @@ const A11yTraining = () => {
         {/* Three training tracks */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
           gap: 0,
           borderTop: '1px solid var(--rule-dark)',
           borderBottom: '1px solid var(--rule-dark)',
@@ -91,7 +92,7 @@ const A11yTraining = () => {
             },
           ].map((t, i) => (
             <div key={i} style={{
-              padding: '40px 32px 36px',
+              padding: viewport.isMobile ? '24px 20px' : '40px 32px 36px',
               paddingLeft: i === 0 ? 0 : 32,
               paddingRight: i === 2 ? 0 : 32,
               borderLeft: i === 0 ? 'none' : '1px solid var(--rule-dark)',
@@ -115,8 +116,8 @@ const A11yTraining = () => {
         {/* Closing CTA */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1.3fr 1fr',
-          gap: 60,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1.3fr 1fr',
+          gap: viewport.isMobile ? 24 : 60,
           alignItems: 'center',
         }}>
           <div>

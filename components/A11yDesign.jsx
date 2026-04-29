@@ -3,6 +3,7 @@
    four-principle list, no checklist grid. Sets a calmer, more philosophical
    tone before we get into the operational sections. */
 const A11yDesign = () => {
+  const viewport = useResponsive();
   const principles = [
     { tag: 'Perceivable', body: 'Screen readers, captions, alt text, sufficient color contrast. If a visitor cannot perceive your content, they cannot use it.' },
     { tag: 'Operable',    body: 'Keyboard navigation, generous hit targets, no time traps. People navigate with many different inputs.' },
@@ -11,13 +12,13 @@ const A11yDesign = () => {
   ];
 
   return (
-    <section id="design" style={{ background: 'var(--light)', padding: '130px 0 120px' }}>
+    <section id="design" style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '130px 0 120px' }}>
       <div className="wrap">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 90, marginBottom: 70 }}>
           <div>
             <div className="eyebrow" style={{ marginBottom: 22 }}>01 &middot; Accessible website design</div>
             <h2 style={{
-              fontSize: 64,
+              fontSize: pickResponsive(viewport, 64, 52, 36),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -41,14 +42,14 @@ const A11yDesign = () => {
         {/* Four principles */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : viewport.isTablet ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
           gap: 0,
           borderTop: '1px solid var(--rule-light)',
           borderBottom: '1px solid var(--rule-light)',
         }}>
           {principles.map((p, i) => (
             <div key={i} style={{
-              padding: '40px 28px 36px',
+              padding: viewport.isMobile ? '24px 20px' : '40px 28px 36px',
               paddingLeft: i === 0 ? 0 : 28,
               paddingRight: i === 3 ? 0 : 28,
               borderLeft: i === 0 ? 'none' : '1px solid var(--rule-light)',

@@ -64,6 +64,7 @@ const QARow = ({ q, a, open, onToggle, i }) => {
 };
 
 const Intro = () => {
+  const viewport = useResponsive();
   const [open, setOpen] = React.useState(0);
   const items = [
     {
@@ -85,12 +86,12 @@ const Intro = () => {
   ];
 
   return (
-    <section style={{ background: 'var(--light)', padding: '120px 0 110px' }}>
+    <section style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 110px' }}>
       <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 100, alignItems: 'start' }}>
         <div style={{ position: 'sticky', top: 40 }}>
           <div className="eyebrow" style={{ marginBottom: 22 }}>Before we build</div>
           <h2 style={{
-            fontSize: 60,
+            fontSize: pickResponsive(viewport, 60, 48, 34),
             lineHeight: 1.02,
             letterSpacing: '-0.028em',
             fontWeight: 400,

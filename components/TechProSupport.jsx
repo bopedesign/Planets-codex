@@ -3,6 +3,7 @@
    a simple, numbered list with short descriptors. */
 
 const TechProSupport = () => {
+  const viewport = useResponsive();
   // Stroke-based line icons, matched to the design system's understated line-art feel
   const ICON_STROKE = 'currentColor';
   const iconProps = {
@@ -81,19 +82,19 @@ const TechProSupport = () => {
   ];
 
   return (
-    <section id="pro-support" style={{ background: 'var(--light)', padding: '120px 0 110px' }}>
+    <section id="pro-support" style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 110px' }}>
       <div className="wrap">
         {/* Header — left-aligned headline + supporting paragraph */}
         <div style={{ marginBottom: 80, maxWidth: 1100 }}>
           <div className="eyebrow" style={{ marginBottom: 22 }}>Pro Support</div>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: '1.4fr 1fr',
-            gap: 80,
+            gridTemplateColumns: viewport.isTablet ? '1fr' : '1.4fr 1fr',
+          gap: viewport.isMobile ? 24 : 80,
             alignItems: 'end',
           }}>
             <h2 style={{
-              fontSize: 60,
+              fontSize: pickResponsive(viewport, 60, 48, 34),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -119,7 +120,7 @@ const TechProSupport = () => {
         {/* Services — 2-column card grid, big numerals as display element */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(2, 1fr)',
           gap: 0,
           borderTop: '1px solid var(--rule-light)',
           borderLeft: '1px solid var(--rule-light)',
@@ -128,7 +129,7 @@ const TechProSupport = () => {
             <div key={i} style={{
               borderRight: '1px solid var(--rule-light)',
               borderBottom: '1px solid var(--rule-light)',
-              padding: '40px 44px 44px',
+              padding: viewport.isMobile ? '24px 20px' : '40px 44px 44px',
               display: 'grid',
               gridTemplateColumns: 'auto 1fr',
               columnGap: 32,
@@ -173,7 +174,7 @@ const TechProSupport = () => {
           <div style={{
             borderRight: '1px solid var(--rule-light)',
             borderBottom: '1px solid var(--rule-light)',
-            padding: '40px 44px 44px',
+            padding: viewport.isMobile ? '24px 20px' : '40px 44px 44px',
             background: 'var(--dark)',
             color: 'var(--light)',
             display: 'flex',

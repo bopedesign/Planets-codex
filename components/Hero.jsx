@@ -8,6 +8,7 @@
    Same dark atmospheric treatment as the other service heroes. */
 
 const Hero = () => {
+  const viewport = useResponsive();
   // Animation cycle: 0..1 over CYCLE seconds. Each block has a reveal point.
   // We use CSS keyframes on each block so the loop runs without React state.
   const CYCLE = 8; // seconds per full wire→design loop
@@ -58,7 +59,7 @@ const Hero = () => {
       color: 'var(--light)',
       position: 'relative',
       overflow: 'hidden',
-      minHeight: 825,
+      minHeight: viewport.isTablet ? 'auto' : 825,
     }}>
       <style>{`
         ${blockKeyframes}
@@ -280,7 +281,7 @@ const Hero = () => {
 
       <div className="wrap" style={{
         position: 'relative',
-        padding: '90px 56px 0',
+        padding: viewport.isMobile ? '28px 0 0' : viewport.isTablet ? '56px 0 0' : '90px 56px 0',
         zIndex: 3,
         display: 'flex',
         flexDirection: 'column',
@@ -289,8 +290,8 @@ const Hero = () => {
         {/* Title block + graphic row */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr auto',
-          gap: 80,
+          gridTemplateColumns: viewport.isTablet ? '1fr' : '1fr auto',
+          gap: viewport.isMobile ? 28 : 80,
           alignItems: 'center',
           paddingBottom: 70,
         }}>
@@ -306,7 +307,7 @@ const Hero = () => {
               <span style={{ color: 'var(--light)' }}>Website Design &amp; Development</span>
             </div>
             <h1 style={{
-              fontSize: 92,
+              fontSize: pickResponsive(viewport, 92, 72, 48),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -536,7 +537,7 @@ const Hero = () => {
         {/* Bottom CTA strip */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(3, 1fr)',
           gap: 0,
           borderTop: '1px solid var(--rule-dark)',
           marginTop: 'auto',
@@ -550,8 +551,8 @@ const Hero = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              padding: '28px 32px 28px 0',
-              paddingLeft: i === 0 ? 0 : 32,
+              padding: viewport.isMobile ? '20px 0' : '28px 32px 28px 0',
+              paddingLeft: viewport.isMobile ? 0 : i === 0 ? 0 : 32,
               borderLeft: i === 0 ? 'none' : '1px solid var(--rule-dark)',
               color: 'var(--light)',
               transition: 'background .2s',
