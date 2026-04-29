@@ -1,5 +1,3 @@
-const ARTICLE_BODY_FONT = 'Iowan Old Style, Palatino Linotype, Book Antiqua, Georgia, serif';
-
 const BlogPostContent = () => {
   const viewport = useResponsive();
   const toc = [
@@ -13,7 +11,7 @@ const BlogPostContent = () => {
   ];
 
   const bodySize = viewport.isMobile ? 18 : 20;
-  const bodyLeading = 1.72;
+  const bodyLeading = 1.66;
   const scrollMarginTop = viewport.isMobile ? 110 : 140;
 
   const sectionHeading = (title, id) => (
@@ -32,7 +30,7 @@ const BlogPostContent = () => {
   );
 
   const bodyPStyle = {
-    fontFamily: ARTICLE_BODY_FONT,
+    fontFamily: 'Inter Tight, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif',
     fontSize: bodySize,
     lineHeight: bodyLeading,
     color: '#3b3e43',
@@ -57,8 +55,8 @@ const BlogPostContent = () => {
             }}>
               <p style={{
                 ...bodyPStyle,
-                fontSize: viewport.isMobile ? 19 : 21,
-                lineHeight: 1.7,
+                fontSize: viewport.isMobile ? 19 : 20,
+                lineHeight: 1.62,
                 marginBottom: 0,
               }}>
                 In October 2023, the W3C quietly published a small dot-release of the most important standard
@@ -117,7 +115,7 @@ const BlogPostContent = () => {
               }}>
                 TL;DR
               </div>
-              <p style={{ ...bodyPStyle, fontSize: viewport.isMobile ? 17 : 18, marginBottom: 0 }}>
+              <p style={{ ...bodyPStyle, fontSize: 16, marginBottom: 0 }}>
                 Nine new criteria, mostly Level AA. Six are about motor and cognitive load. Most well-built sites
                 already pass three or four. Budget two to four weeks of audit-and-remediation, not a redesign.
               </p>
@@ -206,7 +204,7 @@ const BlogPostContent = () => {
                   }}>
                     {title}
                   </div>
-                  <p style={{ ...bodyPStyle, fontSize: 17, marginBottom: 0 }}>
+                  <p style={{ ...bodyPStyle, fontSize: 16, marginBottom: 0 }}>
                     {copy}
                   </p>
                 </div>
@@ -240,7 +238,7 @@ const BlogPostContent = () => {
                 }}>
                   <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--accent-text)' }}>{num}</div>
                   <div style={{ fontSize: 22, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--dark)' }}>{title}</div>
-                  <p style={{ ...bodyPStyle, fontSize: 17, marginBottom: 0 }}>{copy}</p>
+                  <p style={{ ...bodyPStyle, fontSize: 16, marginBottom: 0 }}>{copy}</p>
                 </div>
               ))}
             </div>

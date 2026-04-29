@@ -3,22 +3,11 @@ const BlogPostHero = () => {
 
   return (
     <section style={{
-      background: 'linear-gradient(135deg, var(--dark) 0%, var(--dark) 78%, rgba(211,50,106,0.10) 100%)',
+      background: 'var(--dark)',
       color: 'var(--light)',
       position: 'relative',
       overflow: 'hidden',
     }}>
-      <div aria-hidden="true" style={{
-        position: 'absolute',
-        top: -220,
-        right: -160,
-        width: 680,
-        height: 680,
-        background: 'radial-gradient(circle, rgba(211,50,106,0.08) 0%, transparent 65%)',
-        filter: 'blur(22px)',
-        pointerEvents: 'none',
-      }} />
-
       <div style={{ position: 'relative', zIndex: 2 }}>
         <Nav onDark />
       </div>
@@ -47,18 +36,17 @@ const BlogPostHero = () => {
             <span style={{ color: 'var(--light)' }}>Accessibility</span>
           </div>
 
-          <div style={{ maxWidth: 860 }}>
+          <div style={{ maxWidth: 980 }}>
             <h1 style={{
-              fontSize: pickResponsive(viewport, 88, 66, 46),
-              lineHeight: viewport.isMobile ? 1.02 : 0.98,
+              fontSize: pickResponsive(viewport, 80, 60, 44),
+              lineHeight: viewport.isMobile ? 1.03 : 0.99,
               letterSpacing: '-0.032em',
               fontWeight: 400,
               margin: 0,
               textWrap: 'balance',
+              maxWidth: 920,
             }}>
-              WCAG 2.2 in plain English:<br />
-              what <span style={{ fontStyle: 'italic', fontWeight: 300 }}>changed</span>, and what<br />
-              it means for your site.
+              WCAG 2.2 in plain English: what <span style={{ fontStyle: 'italic', fontWeight: 300 }}>changed</span>, and what it means for your site.
             </h1>
 
             <p style={{
