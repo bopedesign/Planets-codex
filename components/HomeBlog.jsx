@@ -5,11 +5,12 @@ const HomeBlog = () => {
   const viewport = useResponsive();
   const posts = [
     {
-      category: 'UX',
-      title: '5 Keys to Designing Good UX',
+      category: 'Accessibility',
+      title: 'WCAG 2.2 in plain English: what changed, and what it means for your site.',
       date: 'Apr 18, 2026',
-      readTime: '6 min read',
+      readTime: '9 min read',
       image: 'images/blog-ux.svg',
+      href: 'Blog Post.html',
       dark: false,
     },
     {
@@ -58,7 +59,7 @@ const HomeBlog = () => {
             </h2>
           </div>
           <div style={{ justifySelf: viewport.isTablet ? 'start' : 'end' }}>
-            <a href="#" style={{
+            <a href="Blog.html" style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: 10,
@@ -81,7 +82,7 @@ const HomeBlog = () => {
           gap: viewport.isMobile ? 18 : 24,
         }}>
           {posts.map((p, i) => (
-            <a href="#" key={i} style={{
+            <a href={p.href || '#'} key={i} style={{
               display: 'flex',
               flexDirection: 'column',
               gap: 20,

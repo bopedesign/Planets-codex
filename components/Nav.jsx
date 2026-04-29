@@ -62,6 +62,7 @@ const Nav = ({ onDark = true }) => {
     }
   })();
   const activeLabel = (() => {
+    if (currentFile === 'Blog Post.html') return 'Blog';
     for (const it of items) {
       if (it.href === currentFile) return it.label;
       if (Array.isArray(it.children) && it.children.some((c) => c.href === currentFile)) return it.label;

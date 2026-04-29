@@ -220,7 +220,7 @@ const BlogList = () => {
         </div>
 
         {/* Featured post — full-width editorial card */}
-        <a href="#" onClick={(e) => e.preventDefault()} style={{
+        <a href="Blog Post.html" style={{
           display: 'block',
           marginBottom: 96,
           textDecoration: 'none',
@@ -475,7 +475,7 @@ const BlogList = () => {
             })}
 
             {/* Next */}
-            <a href="#" onClick={(e) => e.preventDefault()} style={{
+            <a href="Blog Post.html" style={{
               width: 56, height: 56,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               color: 'var(--dark)',
