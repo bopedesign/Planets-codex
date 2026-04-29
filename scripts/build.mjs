@@ -22,6 +22,67 @@ const RESPONSIVE_GLOBAL_CSS = `
   }
 </style>`;
 
+const BALANCED_TYPESCALE_SCRIPT = `
+<script>
+(() => {
+  const MIN_FONT_SIZE = 16;
+  const TEXT_TAGS = new Set(['A', 'P', 'LI', 'LABEL', 'INPUT', 'TEXTAREA', 'SELECT', 'OPTION', 'BUTTON', 'DIV', 'SPAN']);
+
+  const shouldPreserveCompactStyle = (el, styles, text) => {
+    if (el.closest('svg')) return true;
+    if (el.classList.contains('eyebrow')) return true;
+    if (styles.textTransform === 'uppercase') return true;
+    if ((text.length <= 4 && /^[0-9]+$/.test(text)) || /^[0-9]{2}$/.test(text)) return true;
+    if (styles.letterSpacing !== 'normal' && parseFloat(styles.letterSpacing) >= 0.6 && !text.includes('@')) return true;
+    return false;
+  };
+
+  const shouldRaise = (el) => {
+    if (!TEXT_TAGS.has(el.tagName)) return false;
+    if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') return false;
+
+    const styles = window.getComputedStyle(el);
+    const current = parseFloat(styles.fontSize);
+    if (!Number.isFinite(current) || current >= MIN_FONT_SIZE) return false;
+
+    const text = (el.textContent || '').replace(/\s+/g, ' ').trim();
+    const interactiveField = ['INPUT', 'TEXTAREA', 'SELECT', 'OPTION', 'BUTTON'].includes(el.tagName);
+    if (!interactiveField && !text) return false;
+    if (!interactiveField && shouldPreserveCompactStyle(el, styles, text)) return false;
+
+    return true;
+  };
+
+  const applyReadableTypeFloor = () => {
+    document.querySelectorAll('body *').forEach((el) => {
+      if (shouldRaise(el)) {
+        el.style.fontSize = MIN_FONT_SIZE + 'px';
+      }
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyReadableTypeFloor, { once: true });
+  } else {
+    applyReadableTypeFloor();
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(applyReadableTypeFloor);
+  }
+
+  const observer = new MutationObserver(() => applyReadableTypeFloor());
+  const startObserver = () => {
+    if (document.body) {
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  };
+
+  startObserver();
+  window.addEventListener('resize', applyReadableTypeFloor);
+})();
+</script>`;
+
 const BABEL_SRC_RE = /<script\s+type="text\/babel"\s+src="([^"]+)"><\/script>/g;
 const INLINE_BABEL_RE = /<script\s+type="text\/babel">([\s\S]*?)<\/script>/;
 const REMOVE_RE = [
@@ -111,8 +172,9 @@ async function buildPage(pageFile) {
 
   transformedHtml = transformedHtml.replace('</head>', `${RESPONSIVE_GLOBAL_CSS}\n</head>`);
 
+  const typeScaleScript = `${BALANCED_TYPESCALE_SCRIPT}\n`;
   const bundleScript = `  <script type="module" src="${escapeTemplateContent(bundlePath)}"></script>\n`;
-  transformedHtml = transformedHtml.replace('</body>', `${bundleScript}</body>`);
+  transformedHtml = transformedHtml.replace('</body>', `${typeScaleScript}${bundleScript}</body>`);
 
   await writeFile(path.join(distDir, pageFile), transformedHtml, 'utf8');
 
