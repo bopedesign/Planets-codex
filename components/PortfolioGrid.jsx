@@ -269,7 +269,7 @@ const PortfolioGrid = () => {
       url: 'willametteoutdoor.co',
       tileBg: '#2a2c30',
       tileFg: 'rgba(247,245,243,0.9)',
-      tileAccent: '#f0ddd0',
+      tileAccent: '#ece6e2',
       tileRule: 'rgba(247,245,243,0.10)',
     },
     {
@@ -280,7 +280,7 @@ const PortfolioGrid = () => {
       mark: 'R',
       no: '07 · RBB',
       url: 'riverbendbotanicals.com',
-      tileBg: '#f0ddd0',
+      tileBg: '#ece6e2',
       tileFg: '#25272b',
       tileAccent: '#bd285a',
       tileRule: 'rgba(37,39,43,0.18)',
@@ -321,7 +321,7 @@ const PortfolioGrid = () => {
       url: 'lanecountylibraryfoundation.org',
       tileBg: '#1d1f23',
       tileFg: 'rgba(247,245,243,0.9)',
-      tileAccent: '#f0ddd0',
+      tileAccent: '#ece6e2',
       tileRule: 'rgba(247,245,243,0.10)',
     },
     {

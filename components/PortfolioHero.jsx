@@ -80,7 +80,7 @@ const PortfolioHero = () => {
         position: 'absolute',
         top: -200, right: -220,
         width: 800, height: 800,
-        background: 'radial-gradient(circle, rgba(240,221,208,0.08) 0%, transparent 60%)',
+        background: 'radial-gradient(circle, rgba(236,230,226,0.08) 0%, transparent 60%)',
         filter: 'blur(60px)',
         pointerEvents: 'none',
       }} />

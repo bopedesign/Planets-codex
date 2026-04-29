@@ -31,7 +31,7 @@ const HostingService = () => {
         position: 'absolute',
         top: -180, left: '40%',
         width: 700, height: 700,
-        background: 'radial-gradient(circle, rgba(240,221,208,0.06) 0%, transparent 65%)',
+        background: 'radial-gradient(circle, rgba(236,230,226,0.06) 0%, transparent 65%)',
         filter: 'blur(60px)',
         pointerEvents: 'none',
       }} />

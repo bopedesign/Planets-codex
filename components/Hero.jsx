@@ -116,11 +116,11 @@ const Hero = () => {
           <defs>
             <pattern id="archMinorGrid" width="40" height="40" patternUnits="userSpaceOnUse">
               <path d="M 40 0 L 0 0 0 40" fill="none"
-                stroke="rgba(240,221,208,0.10)" strokeWidth="0.5" />
+                stroke="rgba(236,230,226,0.10)" strokeWidth="0.5" />
             </pattern>
             <pattern id="archMajorGrid" width="200" height="200" patternUnits="userSpaceOnUse">
               <path d="M 200 0 L 0 0 0 200" fill="none"
-                stroke="rgba(240,221,208,0.18)" strokeWidth="1" />
+                stroke="rgba(236,230,226,0.18)" strokeWidth="1" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#archMinorGrid)" />
@@ -153,7 +153,7 @@ const Hero = () => {
           {/* Plan-view rectangles, lightly stacked — like a building footprint
               dissolving into structure. Drawn with thin lines + corner ticks. */}
           <g
-            stroke="rgba(240,221,208,0.18)"
+            stroke="rgba(236,230,226,0.18)"
             strokeWidth="1"
             fill="none"
             strokeLinecap="square"
@@ -186,7 +186,7 @@ const Hero = () => {
           </g>
 
           {/* Dimension lines — extension lines + arrows + label */}
-          <g stroke="rgba(240,221,208,0.22)" strokeWidth="0.8" fill="none">
+          <g stroke="rgba(236,230,226,0.22)" strokeWidth="0.8" fill="none">
             {/* Horizontal dim along top of footprint */}
             <line x1="980" y1="92" x2="1740" y2="92" />
             <line x1="980" y1="86" x2="980" y2="98" />
@@ -195,13 +195,13 @@ const Hero = () => {
             <path d="M 984 88 L 980 92 L 984 96" />
             <path d="M 1736 88 L 1740 92 L 1736 96" />
           </g>
-          <text x="1360" y="84" fill="rgba(240,221,208,0.42)"
+          <text x="1360" y="84" fill="rgba(236,230,226,0.42)"
             fontSize="11" fontWeight="500" letterSpacing="0.18em"
             fontFamily="'Inter Tight', sans-serif" textAnchor="middle">
           </text>
 
           {/* Vertical dim on right */}
-          <g stroke="rgba(240,221,208,0.22)" strokeWidth="0.8" fill="none">
+          <g stroke="rgba(236,230,226,0.22)" strokeWidth="0.8" fill="none">
             <line x1="1772" y1="120" x2="1772" y2="660" />
             <line x1="1766" y1="120" x2="1778" y2="120" />
             <line x1="1766" y1="660" x2="1778" y2="660" />
@@ -236,22 +236,22 @@ const Hero = () => {
           {/* Sheet metadata — looks like a title block stamp, lower-right */}
           <g transform="translate(1572,720)" fontFamily="'Inter Tight', sans-serif">
             <rect x="0" y="0" width="200" height="56"
-              fill="none" stroke="rgba(240,221,208,0.18)" strokeWidth="1" />
-            <line x1="0" y1="20" x2="200" y2="20" stroke="rgba(240,221,208,0.18)" strokeWidth="1" />
-            <line x1="120" y1="20" x2="120" y2="56" stroke="rgba(240,221,208,0.18)" strokeWidth="1" />
-            <text x="10" y="14" fill="rgba(240,221,208,0.45)"
+              fill="none" stroke="rgba(236,230,226,0.18)" strokeWidth="1" />
+            <line x1="0" y1="20" x2="200" y2="20" stroke="rgba(236,230,226,0.18)" strokeWidth="1" />
+            <line x1="120" y1="20" x2="120" y2="56" stroke="rgba(236,230,226,0.18)" strokeWidth="1" />
+            <text x="10" y="14" fill="rgba(236,230,226,0.45)"
               fontSize="9" fontWeight="600" letterSpacing="0.18em">
               SHEET A-001
             </text>
-            <text x="10" y="38" fill="rgba(240,221,208,0.55)"
+            <text x="10" y="38" fill="rgba(236,230,226,0.55)"
               fontSize="11" fontWeight="500" letterSpacing="-0.01em">
               Plan / Site
             </text>
-            <text x="10" y="50" fill="rgba(240,221,208,0.35)"
+            <text x="10" y="50" fill="rgba(236,230,226,0.35)"
               fontSize="8" fontWeight="500" letterSpacing="0.1em">
               SCALE 1:1
             </text>
-            <text x="130" y="38" fill="rgba(240,221,208,0.55)"
+            <text x="130" y="38" fill="rgba(236,230,226,0.55)"
               fontSize="11" fontWeight="500" letterSpacing="-0.01em">
               REV 03
             </text>
@@ -264,7 +264,7 @@ const Hero = () => {
         position: 'absolute',
         top: -260, right: -180,
         width: 900, height: 900,
-        background: 'radial-gradient(circle, rgba(240,221,208,0.09) 0%, rgba(240,221,208,0.03) 40%, transparent 65%)',
+        background: 'radial-gradient(circle, rgba(236,230,226,0.09) 0%, rgba(236,230,226,0.03) 40%, transparent 65%)',
         filter: 'blur(50px)',
         pointerEvents: 'none',
       }} />
@@ -522,7 +522,7 @@ const Hero = () => {
                 <defs>
                   <linearGradient id="imgGrad" x1="0" y1="0" x2="1" y2="1">
                     <stop offset="0%" stopColor="rgba(228,40,110,0.30)" />
-                    <stop offset="100%" stopColor="rgba(240,221,208,0.18)" />
+                    <stop offset="100%" stopColor="rgba(236,230,226,0.18)" />
                   </linearGradient>
                 </defs>
 

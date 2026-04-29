@@ -88,7 +88,7 @@ const A11yHero = () => {
         left: '50%',
         transform: 'translateX(-50%)',
         width: 1400, height: 700,
-        background: 'radial-gradient(ellipse at center, rgba(240,221,208,0.10) 0%, rgba(240,221,208,0.04) 40%, transparent 70%)',
+        background: 'radial-gradient(ellipse at center, rgba(236,230,226,0.10) 0%, rgba(236,230,226,0.04) 40%, transparent 70%)',
         filter: 'blur(60px)',
         pointerEvents: 'none',
       }} />
@@ -191,7 +191,7 @@ const A11yHero = () => {
                         x={r.x + 16} y={r.y + r.h / 2 - 7}
                         width={Math.min(r.w - 32, 70)} height="14"
                         rx="2"
-                        fill={isActive ? 'rgba(240,221,208,0.25)' : 'rgba(247,245,243,0.08)'}
+                        fill={isActive ? 'rgba(236,230,226,0.25)' : 'rgba(247,245,243,0.08)'}
                       />
                     )}
                     {s.kind === 'submit' && (
@@ -298,7 +298,7 @@ const A11yHero = () => {
                         <rect
                           x={r.x + r.w / 2 - 11} y={r.y + r.h / 2 - 11}
                           width="22" height="22" rx="2"
-                          fill={s.label === 'Option A' ? 'rgba(240,221,208,0.3)' : 'rgba(247,245,243,0.04)'}
+                          fill={s.label === 'Option A' ? 'rgba(236,230,226,0.3)' : 'rgba(247,245,243,0.04)'}
                           stroke="rgba(247,245,243,0.30)"
                           strokeWidth="1.1"
                         />

@@ -10,10 +10,10 @@
 const PortraitPlaceholder = ({ initials, tone = 'sand', label }) => {
   const palettes = {
     sand:   { bg: '#efece8', text: '#25272b', meta: 'rgba(37,39,43,0.5)' },
-    cream:  { bg: '#f0ddd0', text: '#25272b', meta: 'rgba(37,39,43,0.55)' },
+    cream:  { bg: '#ece6e2', text: '#25272b', meta: 'rgba(37,39,43,0.55)' },
     smoke:  { bg: '#e4e0db', text: '#25272b', meta: 'rgba(37,39,43,0.5)' },
-    ink:    { bg: '#25272b', text: '#f0ddd0', meta: 'rgba(240,221,208,0.55)' },
-    plum:   { bg: '#1d1f23', text: '#f0ddd0', meta: 'rgba(240,221,208,0.5)' },
+    ink:    { bg: '#25272b', text: '#ece6e2', meta: 'rgba(236,230,226,0.55)' },
+    plum:   { bg: '#1d1f23', text: '#ece6e2', meta: 'rgba(236,230,226,0.5)' },
   };
   const p = palettes[tone] || palettes.sand;
 

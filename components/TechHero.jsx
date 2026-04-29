@@ -116,7 +116,7 @@ const TechHero = () => {
         position: 'absolute',
         top: -260, right: -180,
         width: 900, height: 900,
-        background: 'radial-gradient(circle, rgba(240,221,208,0.09) 0%, rgba(240,221,208,0.03) 40%, transparent 65%)',
+        background: 'radial-gradient(circle, rgba(236,230,226,0.09) 0%, rgba(236,230,226,0.03) 40%, transparent 65%)',
         filter: 'blur(50px)',
         pointerEvents: 'none',
       }} />

@@ -158,7 +158,7 @@ const SeoHero = () => {
         position: 'absolute',
         top: -340, right: -260,
         width: 1100, height: 1100,
-        background: 'radial-gradient(circle, rgba(240,221,208,0.10) 0%, rgba(240,221,208,0.04) 40%, transparent 65%)',
+        background: 'radial-gradient(circle, rgba(236,230,226,0.10) 0%, rgba(236,230,226,0.04) 40%, transparent 65%)',
         filter: 'blur(50px)',
         pointerEvents: 'none',
       }} />

@@ -15,7 +15,7 @@ const A11yTraining = () => {
         position: 'absolute',
         top: -250, right: -200,
         width: 900, height: 900,
-        background: 'radial-gradient(circle, rgba(240,221,208,0.07) 0%, transparent 60%)',
+        background: 'radial-gradient(circle, rgba(236,230,226,0.07) 0%, transparent 60%)',
         filter: 'blur(50px)',
         pointerEvents: 'none',
       }} />

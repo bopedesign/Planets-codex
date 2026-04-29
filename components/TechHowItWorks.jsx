@@ -55,7 +55,7 @@ const TechHowItWorks = () => {
         position: 'absolute',
         top: -140, right: -120,
         width: 600, height: 600,
-        background: 'radial-gradient(circle, rgba(240,221,208,0.06) 0%, transparent 65%)',
+        background: 'radial-gradient(circle, rgba(236,230,226,0.06) 0%, transparent 65%)',
         filter: 'blur(50px)',
         pointerEvents: 'none',
       }} />

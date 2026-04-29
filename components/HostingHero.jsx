@@ -33,7 +33,7 @@ const HostingHero = () => {
       <g transform="translate(539,16)">
         {signal.map((v, i) => (
           <rect key={i} x={i * 7} y={24 - v} width="4" height={v}
-            fill={online ? (i === signal.length - 1 ? 'var(--accent-on-dark)' : 'rgba(240,221,208,0.4)') : 'rgba(247,245,243,0.18)'} />
+            fill={online ? (i === signal.length - 1 ? 'var(--accent-on-dark)' : 'rgba(236,230,226,0.4)') : 'rgba(247,245,243,0.18)'} />
         ))}
       </g>
       {/* uptime % */}
@@ -63,7 +63,7 @@ const HostingHero = () => {
         position: 'absolute',
         top: -260, right: -180,
         width: 900, height: 900,
-        background: 'radial-gradient(circle, rgba(240,221,208,0.09) 0%, rgba(240,221,208,0.03) 40%, transparent 65%)',
+        background: 'radial-gradient(circle, rgba(236,230,226,0.09) 0%, rgba(236,230,226,0.03) 40%, transparent 65%)',
         filter: 'blur(50px)',
         pointerEvents: 'none',
       }} />

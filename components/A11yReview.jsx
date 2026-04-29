@@ -17,8 +17,8 @@ const A11yReview = () => {
     { sev: 'warn',  rule: '2.4.4 Link purpose',                where: 'footer block',      note: 'three "click here" links' },
   ];
 
-  const sevColor = { pass: 'rgba(150,200,160,0.95)', warn: 'rgba(240,221,208,0.95)', fail: 'var(--accent)' };
-  const sevBg    = { pass: 'rgba(150,200,160,0.10)', warn: 'rgba(240,221,208,0.10)', fail: 'rgba(211,50,106,0.10)' };
+  const sevColor = { pass: 'rgba(150,200,160,0.95)', warn: 'rgba(236,230,226,0.95)', fail: 'var(--accent)' };
+  const sevBg    = { pass: 'rgba(150,200,160,0.10)', warn: 'rgba(236,230,226,0.10)', fail: 'rgba(211,50,106,0.10)' };
 
   const counts = findings.reduce((acc, f) => { acc[f.sev]++; return acc; }, { pass: 0, warn: 0, fail: 0 });
 
