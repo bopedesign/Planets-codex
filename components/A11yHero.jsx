@@ -132,7 +132,7 @@ const A11yHero = () => {
               <span style={{ color: 'var(--light)' }}>Website Accessibility</span>
             </div>
             <h1 style={{
-              fontSize: pickResponsive(viewport, 92, 72, 48),
+              fontSize: pickResponsive(viewport, 92, 64, 42),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,

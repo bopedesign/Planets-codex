@@ -59,7 +59,7 @@ const QuoteHero = () => {
           </div>
 
           <h1 style={{
-            fontSize: pickResponsive(viewport, 96, 72, 48),
+            fontSize: pickResponsive(viewport, 96, 64, 42),
             lineHeight: 1.02,
             letterSpacing: '-0.028em',
             fontWeight: 400,
