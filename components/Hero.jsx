@@ -9,6 +9,7 @@
 
 const Hero = () => {
   const viewport = useResponsive();
+  const heroGraphicWidth = viewport.isMobile ? '100%' : viewport.isTablet ? 620 : 760;
   // Animation cycle: 0..1 over CYCLE seconds. Each block has a reveal point.
   // We use CSS keyframes on each block so the loop runs without React state.
   const CYCLE = 8; // seconds per full wire→design loop
@@ -307,7 +308,7 @@ const Hero = () => {
               <span style={{ color: 'var(--light)' }}>Website Design &amp; Development</span>
             </div>
             <h1 style={{
-              fontSize: pickResponsive(viewport, 92, 72, 48),
+              fontSize: pickResponsive(viewport, 92, 64, 42),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -328,13 +329,19 @@ const Hero = () => {
           </div>
 
           {/* Wireframe → design browser graphic */}
-          <div style={{ position: 'relative', width: 760, height: 460, flexShrink: 0 }}>
+          <div style={{
+            position: 'relative',
+            width: heroGraphicWidth,
+            maxWidth: 760,
+            aspectRatio: '760 / 460',
+            flexShrink: 0,
+          }}>
             <svg
-              width="760"
-              height="460"
+              width="100%"
+              height="100%"
               viewBox="0 0 760 460"
               preserveAspectRatio="xMidYMid meet"
-              style={{ display: 'block', overflow: 'visible' }}
+              style={{ width: '100%', height: '100%', display: 'block', overflow: 'visible' }}
               aria-hidden="true"
             >
               {/* Browser window — main canvas */}

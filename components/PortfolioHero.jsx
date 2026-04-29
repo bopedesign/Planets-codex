@@ -54,6 +54,9 @@ const PortfolioHero = () => {
   // Card geometry
   const CARD_W = 760;
   const CARD_H = 500;
+  const stackOffset = viewport.isMobile ? 16 : viewport.isTablet ? 24 : 36;
+  const cardWidth = viewport.isMobile ? 300 : viewport.isTablet ? 560 : CARD_W;
+  const cardHeight = viewport.isMobile ? 198 : viewport.isTablet ? 368 : CARD_H;
 
   const frontIdx = active;
   const backIdx = (active + 1) % projects.length;
@@ -112,7 +115,7 @@ const PortfolioHero = () => {
             </div>
 
             <h1 style={{
-              fontSize: pickResponsive(viewport, 96, 72, 48),
+              fontSize: pickResponsive(viewport, 96, 64, 42),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -176,8 +179,9 @@ const PortfolioHero = () => {
           {/* Orthogonal 2-card stack — back card peeks out, front card slides on the swap */}
           <div style={{
             position: 'relative',
-            width: viewport.isMobile ? '100%' : CARD_W + 36,
-            height: viewport.isMobile ? 260 : CARD_H + 36,
+            width: viewport.isMobile ? '100%' : cardWidth + stackOffset,
+            maxWidth: cardWidth + stackOffset,
+            height: cardHeight + stackOffset,
             flexShrink: 0,
           }}>
             {/* Back card — next project, hairline outline only */}
@@ -185,10 +189,10 @@ const PortfolioHero = () => {
               key={`back-${backIdx}`}
               style={{
                 position: 'absolute',
-                top: 36,
+                top: stackOffset,
                 right: 0,
-                width: CARD_W,
-                height: CARD_H,
+                width: cardWidth,
+                height: cardHeight,
                 border: '1px solid var(--rule-dark)',
                 background: 'rgba(29,31,35,0.6)',
                 zIndex: 1,
@@ -230,9 +234,9 @@ const PortfolioHero = () => {
               style={{
                 position: 'absolute',
                 top: 0,
-                right: 36,
-                width: CARD_W,
-                height: CARD_H,
+                right: stackOffset,
+                width: cardWidth,
+                height: cardHeight,
                 background: '#1d1f23',
                 border: '1px solid var(--rule-dark)',
                 zIndex: 2,
@@ -272,7 +276,7 @@ const PortfolioHero = () => {
               </div>
               <div style={{
                 width: '100%',
-                height: CARD_H - 38,
+                height: cardHeight - 38,
                 overflow: 'hidden',
                 position: 'relative',
               }}>

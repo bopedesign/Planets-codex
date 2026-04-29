@@ -8,6 +8,7 @@
 
 const TechHero = () => {
   const viewport = useResponsive();
+  const queueGraphicWidth = viewport.isMobile ? '100%' : viewport.isTablet ? 620 : 760;
   // ─── Ticket stack graphic ────────────────────────────────────────────
   const Ticket = ({ x, y, rot, active, title, meta, status, statusColor, lines }) => (
     <g transform={`translate(${x},${y}) rotate(${rot})`} opacity={active ? 1 : 0.5}>
@@ -160,7 +161,7 @@ const TechHero = () => {
               <span style={{ color: 'var(--light)' }}>Tech Support &amp; Security</span>
             </div>
             <h1 style={{
-              fontSize: pickResponsive(viewport, 92, 72, 48),
+              fontSize: pickResponsive(viewport, 92, 64, 42),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -181,13 +182,19 @@ const TechHero = () => {
           </div>
 
           {/* Ticket queue graphic — horizontal layout */}
-          <div style={{ position: 'relative', width: viewport.isMobile ? '100%' : viewport.isTablet ? 620 : 760, height: viewport.isMobile ? 260 : viewport.isTablet ? 300 : 360, flexShrink: 0 }}>
+          <div style={{
+            position: 'relative',
+            width: queueGraphicWidth,
+            maxWidth: 760,
+            aspectRatio: '760 / 360',
+            flexShrink: 0,
+          }}>
             <svg
-              width="760"
-              height="360"
+              width="100%"
+              height="100%"
               viewBox="0 0 760 360"
               preserveAspectRatio="xMidYMid meet"
-              style={{ display: 'block', overflow: 'visible' }}
+              style={{ width: '100%', height: '100%', display: 'block', overflow: 'visible' }}
               aria-hidden="true"
             >
               {/* "AVG RESOLVE" chip — top-left, sits above the active card */}

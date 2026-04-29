@@ -4,6 +4,7 @@
    small Eugene, OR location badge. */
 const HostingHero = () => {
   const viewport = useResponsive();
+  const rackGraphicWidth = viewport.isMobile ? '100%' : viewport.isTablet ? 620 : 799;
 
   // Single rack-row component. Each row reads as 1U slot with status lights,
   // a label, and a small bandwidth waveform.
@@ -108,7 +109,7 @@ const HostingHero = () => {
             </div>
 
             <h1 style={{
-              fontSize: pickResponsive(viewport, 92, 72, 48),
+              fontSize: pickResponsive(viewport, 92, 64, 42),
               lineHeight: 1.02,
               letterSpacing: '-0.028em',
               fontWeight: 400,
@@ -131,13 +132,19 @@ const HostingHero = () => {
           </div>
 
           {/* Server rack graphic */}
-          <div style={{ position: 'relative', width: viewport.isMobile ? '100%' : viewport.isTablet ? 620 : 799, height: viewport.isMobile ? 320 : viewport.isTablet ? 380 : 460, flexShrink: 0 }}>
+          <div style={{
+            position: 'relative',
+            width: rackGraphicWidth,
+            maxWidth: 799,
+            aspectRatio: '799 / 460',
+            flexShrink: 0,
+          }}>
             <svg
-              width="799"
-              height="460"
+              width="100%"
+              height="100%"
               viewBox="0 0 799 460"
               preserveAspectRatio="xMidYMid meet"
-              style={{ display: 'block', overflow: 'visible' }}
+              style={{ width: '100%', height: '100%', display: 'block', overflow: 'visible' }}
               aria-hidden="true"
             >
               {/* Eugene location badge — top-left, hangs above the rack */}

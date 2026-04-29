@@ -178,7 +178,7 @@ const SeoHero = () => {
 
       {/* Ticker panel — vertically centered band, fades in/out top & bottom only.
           Aligned to content-width right edge so chips sit beside the headline. */}
-      <div style={{
+      {!viewport.isTablet && <div style={{
         position: 'absolute',
         top: '50%',
         right: 'max(56px, calc((100% - 1680px) / 2 + 56px))',
@@ -195,7 +195,7 @@ const SeoHero = () => {
       }}>
         <TickerColumn items={colA} direction="up"   duration={70} offset={0}  />
         <TickerColumn items={colB} direction="down" duration={85} offset={20} />
-      </div>
+      </div>}
 
       <Nav onDark />
 
@@ -219,7 +219,7 @@ const SeoHero = () => {
         {/* Title block — single column on the left, ticker fills the right via absolute layer */}
         <div style={{ paddingBottom: 70, maxWidth: 760, position: 'relative', zIndex: 4 }}>
           <h1 style={{
-            fontSize: pickResponsive(viewport, 92, 72, 48),
+            fontSize: pickResponsive(viewport, 92, 64, 42),
             lineHeight: 1.02,
             letterSpacing: '-0.028em',
             fontWeight: 400,
