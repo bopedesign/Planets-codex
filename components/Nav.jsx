@@ -107,7 +107,7 @@ const Nav = ({ onDark = true }) => {
       </a>
 
       {!isCompact && (
-        <div style={{ display: 'flex', gap: 36, fontSize: 14, fontWeight: 500 }}>
+        <div style={{ display: 'flex', gap: 36, fontSize: 16, fontWeight: 500 }}>
           {items.map((item) => {
             const hasDropdown = Array.isArray(item.children) && item.children.length > 0;
             const isOpen = openMenu === item.label;
@@ -170,7 +170,7 @@ const Nav = ({ onDark = true }) => {
                         style={{
                           display: 'block',
                           padding: '12px 20px',
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: 400,
                           color: onDark ? 'rgba(247,245,243,0.85)' : 'var(--dark)',
                           whiteSpace: 'nowrap',
@@ -197,7 +197,7 @@ const Nav = ({ onDark = true }) => {
       )}
 
       {!isCompact && (
-        <a href="Get a Quote.html" className={onDark ? 'btn btn-light' : 'btn btn-primary'} style={{ padding: '10px 18px', fontSize: 13, fontWeight: 600 }}>
+        <a href="Get a Quote.html" className={onDark ? 'btn btn-light' : 'btn btn-primary'} style={{ padding: '10px 18px', fontSize: 16, fontWeight: 600 }}>
           Get a Quote
         </a>
       )}
@@ -272,7 +272,7 @@ const Nav = ({ onDark = true }) => {
                         onClick={() => setMobileMenuOpen(false)}
                         style={{
                           color: muted,
-                          fontSize: 14,
+                          fontSize: 16,
                           lineHeight: 1.4,
                         }}
                       >
