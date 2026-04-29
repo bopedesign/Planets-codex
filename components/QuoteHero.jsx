@@ -1,0 +1,155 @@
+/* Get a Quote — hero. Same dark photo treatment as the Blog hero so the
+   service-page family reads consistently. Includes breadcrumb, two-line
+   editorial headline, intro, and the same 3-column CTA strip pattern. */
+
+const QuoteHero = () => {
+  return (
+    <section style={{
+      background: 'var(--dark)',
+      color: 'var(--light)',
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+      {/* Photo background — same as home hero */}
+      <div aria-hidden="true" style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: 'url("images/heroBackground-100.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }} />
+      {/* Darkening gradient for legibility on the left */}
+      <div aria-hidden="true" style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(90deg, rgba(20,22,25,0.78) 0%, rgba(20,22,25,0.55) 45%, rgba(20,22,25,0.25) 80%)',
+        pointerEvents: 'none',
+      }} />
+      {/* Magenta accent glow top-right to tie into brand */}
+      <div aria-hidden="true" style={{
+        position: 'absolute',
+        top: -220, right: -180,
+        width: 720, height: 720,
+        background: 'radial-gradient(circle, rgba(211,50,106,0.10) 0%, transparent 62%)',
+        filter: 'blur(20px)',
+        pointerEvents: 'none',
+      }} />
+
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <Nav onDark />
+      </div>
+
+      <div className="wrap" style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{
+          paddingTop: 80,
+          paddingBottom: 80,
+          maxWidth: 980,
+        }}>
+          {/* Breadcrumb */}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 12,
+            fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase',
+            color: 'rgba(247,245,243,0.7)', marginBottom: 32,
+          }}>
+            <span>9 Planets</span>
+            <span style={{ color: 'var(--accent-on-dark)' }}>/</span>
+            <span style={{ color: 'var(--light)' }}>Get a Quote</span>
+          </div>
+
+          <h1 style={{
+            fontSize: 96,
+            lineHeight: 1.02,
+            letterSpacing: '-0.028em',
+            fontWeight: 400,
+            margin: 0,
+            textWrap: 'balance',
+          }}>
+            Tell us about <span style={{ fontStyle: 'italic', fontWeight: 300 }}>the project.</span>
+          </h1>
+
+          <p style={{
+            fontSize: 18,
+            lineHeight: 1.6,
+            color: 'rgba(247,245,243,0.78)',
+            margin: '36px 0 0',
+            maxWidth: 640,
+            textWrap: 'pretty',
+          }}>
+            A few details and we'll be in touch within one business day with a clear scope, timeline, and a
+            real number, not a generic "starting at" rate. No sales pressure, no automated follow-ups.
+          </p>
+        </div>
+
+        {/* Bottom CTA strip — same as Portfolio/Blog/service pages */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          borderTop: '1px solid rgba(247,245,243,0.12)',
+        }}>
+          {[
+            { label: 'Call us',         sub: '541.214.2116',          href: 'tel:5412142116' },
+            { label: 'Email',           sub: 'hello@nineplanets.co',  href: 'mailto:hello@nineplanets.co' },
+            { label: 'Schedule a call', sub: '20 min, no pressure',   href: '#' },
+          ].map((cta, i) => (
+            <a key={i} href={cta.href} style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '30px 28px 30px',
+              paddingLeft: i === 0 ? 0 : 32,
+              paddingRight: i === 2 ? 0 : 32,
+              borderLeft: i === 0 ? 'none' : '1px solid rgba(247,245,243,0.12)',
+              color: 'var(--light)',
+              transition: 'background .2s ease',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
+              const arrow = e.currentTarget.querySelector('.cta-arrow');
+              if (arrow) arrow.style.transform = 'translateX(4px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              const arrow = e.currentTarget.querySelector('.cta-arrow');
+              if (arrow) arrow.style.transform = 'translateX(0)';
+            }}>
+              <div>
+                <div style={{
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: 'var(--light)',
+                  marginBottom: 8,
+                }}>
+                  {cta.label}
+                </div>
+                <div style={{
+                  fontSize: 14,
+                  color: 'rgba(247,245,243,0.65)',
+                  fontWeight: 400,
+                }}>
+                  {cta.sub}
+                </div>
+              </div>
+              <svg
+                className="cta-arrow"
+                width="22" height="22" viewBox="0 0 22 22" fill="none"
+                style={{
+                  color: 'var(--accent)',
+                  transition: 'transform .2s ease',
+                  flexShrink: 0,
+                }}
+              >
+                <path d="M4 11h13M12 6l5 5-5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="square" fill="none" />
+              </svg>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+window.QuoteHero = QuoteHero;

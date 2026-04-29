@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.npm-cache/
+standalone/
+components/_standalone/
+scratch/
+scraps/
+screenshots/
+uploads/
+_compare/
+_check*.png
+*.bak
