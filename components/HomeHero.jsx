@@ -388,15 +388,22 @@ const HomeHero = () => {
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
                   const arrow = e.currentTarget.querySelector('.cta-arrow');
+                  const textGroup = e.currentTarget.querySelector('.cta-text');
                   if (arrow) arrow.style.transform = 'translateX(4px)';
+                  if (textGroup) textGroup.style.transform = 'translateX(10px)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = 'transparent';
                   const arrow = e.currentTarget.querySelector('.cta-arrow');
+                  const textGroup = e.currentTarget.querySelector('.cta-text');
                   if (arrow) arrow.style.transform = 'translateX(0)';
+                  if (textGroup) textGroup.style.transform = 'translateX(0)';
                 }}
               >
-                <div>
+                <div
+                  className="cta-text"
+                  style={{ transition: 'transform .22s ease' }}
+                >
                   <div style={{
                     fontSize: 13,
                     fontWeight: 700,
