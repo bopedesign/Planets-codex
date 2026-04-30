@@ -87,8 +87,8 @@ const Intro = () => {
 
   return (
     <section style={{ background: 'var(--light)', padding: viewport.isMobile ? '72px 0' : viewport.isTablet ? '96px 0' : '120px 0 110px' }}>
-      <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 100, alignItems: 'start' }}>
-        <div style={{ position: 'sticky', top: 40 }}>
+      <div className="wrap" style={{ display: 'grid', gridTemplateColumns: viewport.isMobile ? '1fr' : '1fr 1.1fr', gap: viewport.isMobile ? 40 : 100, alignItems: 'start' }}>
+        <div style={{ position: viewport.isMobile ? 'static' : 'sticky', top: 40 }}>
           <div className="eyebrow" style={{ marginBottom: 22 }}>Before we build</div>
           <h2 style={{
             fontSize: pickResponsive(viewport, 60, 48, 34),
@@ -98,8 +98,7 @@ const Intro = () => {
             margin: '0 0 32px 0',
             textWrap: 'balance',
           }}>
-            Great sites start<br />
-            with the <span style={{ fontStyle: 'italic', fontWeight: 300 }}>right questions</span>.
+            {viewport.isMobile ? (<>Great sites start with the <span style={{ fontStyle: 'italic', fontWeight: 300 }}>right questions</span>.</>) : (<>Great sites start<br />with the <span style={{ fontStyle: 'italic', fontWeight: 300 }}>right questions</span>.</>)}
           </h2>
           <hr className="dashed-accent" style={{ maxWidth: 60, marginLeft: 0, marginBottom: 24 }} />
           <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--muted-light)', margin: '0 0 20px', maxWidth: 420 }}>
