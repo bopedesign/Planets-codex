@@ -10,7 +10,7 @@
 const Hero = () => {
   const viewport = useResponsive();
   const heroGraphicWidth = viewport.isMobile ? '100%' : viewport.isTablet ? 620 : 760;
-  const heroGraphicMaxWidth = viewport.isMobile ? 640 : 760;
+  const heroGraphicMaxWidth = viewport.isMobile ? 560 : 760;
   const heroGraphicViewBox = viewport.isMobile ? '80 0 600 460' : '0 0 760 460';
   const browserOffsetX = viewport.isMobile ? 0 : 80;
   // Animation cycle: 0..1 over CYCLE seconds. Each block has a reveal point.
