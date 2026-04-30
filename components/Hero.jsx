@@ -9,7 +9,7 @@
 
 const Hero = () => {
   const viewport = useResponsive();
-  const heroGraphicWidth = viewport.isMobile ? '100%' : viewport.isTablet ? 620 : 760;
+  const heroGraphicWidth = viewport.isMobile ? 'calc(100% - 20px)' : viewport.isTablet ? 620 : 760;
   const heroGraphicMaxWidth = viewport.isMobile ? 560 : 760;
   const heroGraphicViewBox = viewport.isMobile ? '80 0 600 460' : '0 0 760 460';
   const browserOffsetX = viewport.isMobile ? 0 : 80;
@@ -339,6 +339,7 @@ const Hero = () => {
             aspectRatio: '760 / 460',
             flexShrink: 0,
             justifySelf: viewport.isTablet ? 'start' : 'end',
+            marginLeft: viewport.isMobile ? 20 : 0,
           }}>
             <svg
               width="100%"
