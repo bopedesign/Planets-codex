@@ -10,6 +10,9 @@
 const Hero = () => {
   const viewport = useResponsive();
   const heroGraphicWidth = viewport.isMobile ? '100%' : viewport.isTablet ? 620 : 760;
+  const heroGraphicMaxWidth = viewport.isMobile ? 640 : 760;
+  const heroGraphicViewBox = viewport.isMobile ? '80 0 600 460' : '0 0 760 460';
+  const browserOffsetX = viewport.isMobile ? 0 : 80;
   // Animation cycle: 0..1 over CYCLE seconds. Each block has a reveal point.
   // We use CSS keyframes on each block so the loop runs without React state.
   const CYCLE = 8; // seconds per full wire→design loop
@@ -332,20 +335,21 @@ const Hero = () => {
           <div style={{
             position: 'relative',
             width: heroGraphicWidth,
-            maxWidth: 760,
+            maxWidth: heroGraphicMaxWidth,
             aspectRatio: '760 / 460',
             flexShrink: 0,
+            justifySelf: viewport.isTablet ? 'start' : 'end',
           }}>
             <svg
               width="100%"
               height="100%"
-              viewBox="0 0 760 460"
-              preserveAspectRatio="xMidYMid meet"
+              viewBox={heroGraphicViewBox}
+              preserveAspectRatio={viewport.isMobile ? 'xMinYMid meet' : 'xMidYMid meet'}
               style={{ width: '100%', height: '100%', display: 'block', overflow: 'visible' }}
               aria-hidden="true"
             >
               {/* Browser window — main canvas */}
-              <g transform="translate(80,0)">
+              <g transform={`translate(${browserOffsetX},0)`}>
                 {/* Window frame */}
                 <rect x="0" y="0" width="600" height="412" fill="#1d1f23"
                   stroke="rgba(247,245,243,0.14)" strokeWidth="1" />
