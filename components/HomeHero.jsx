@@ -332,11 +332,12 @@ const HomeHero = () => {
 
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: viewport.isMobile ? '1fr' : 'repeat(3, 1fr)',
-                gap: viewport.isMobile ? 16 : 24,
+                gridTemplateColumns: viewport.isMobile ? 'repeat(3, minmax(0, auto))' : 'repeat(3, 1fr)',
+                justifyContent: viewport.isMobile ? 'space-between' : 'stretch',
+                gap: viewport.isMobile ? 12 : 24,
               }}>
                 {['Eugene, OR', 'Detroit, MI', '& Beyond'].map((loc) => (
-                  <div key={loc}>
+                  <div key={loc} style={{ minWidth: 0 }}>
                     <div style={{
                       height: 1,
                       background: 'var(--accent)',
@@ -344,10 +345,11 @@ const HomeHero = () => {
                       marginBottom: 14,
                     }} />
                     <div style={{
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: 600,
                       letterSpacing: '-0.005em',
                       color: 'var(--light)',
+                      whiteSpace: 'nowrap',
                     }}>
                       {loc}
                     </div>
