@@ -82,7 +82,7 @@ const HomeServices = () => {
           </h2>
           <div style={{
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: viewport.isMobile ? 'flex-start' : 'flex-end',
           }}>
             <p style={{
               fontSize: 14,
@@ -90,6 +90,7 @@ const HomeServices = () => {
               color: 'var(--muted-light)',
               margin: 0,
               maxWidth: 360,
+              textAlign: 'left',
             }}>
               Design, marketing, accessibility, support, and hosting, all
               handled by one local team so the pieces actually work together.
